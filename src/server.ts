@@ -1,9 +1,11 @@
+import * as dotenv from "dotenv";
 import express from "express";
 import { Routes } from "./routes/routes";
 import helmet from "helmet";
 import cors from "cors";
 import bodyParser from "body-parser";
 import config from "../config.json";
+dotenv.config();
 class Server {
 	private app: express.Application;
 	private port: number;
