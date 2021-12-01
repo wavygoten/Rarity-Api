@@ -1,10 +1,11 @@
 import { Pool } from "pg";
-class DB {
+import config from "../../config.json";
+export class DB {
 	public pool = new Pool();
 	constructor() {
 		// move to env
 		this.pool = new Pool({
-			connectionString: `//admin:secretss@localhost:5432/test`,
+			connectionString: config.PG,
 		});
 	}
 	async createDB() {

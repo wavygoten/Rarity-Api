@@ -1,16 +1,16 @@
-require("dotenv").config();
 import express from "express";
 import { Routes } from "./routes/routes";
 import helmet from "helmet";
 import cors from "cors";
 import bodyParser from "body-parser";
+import config from "../config.json";
 class Server {
 	private app: express.Application;
 	private port: number;
 	private router: Routes;
 	constructor() {
 		this.app = express();
-		this.port = 9785;
+		this.port = config.PORT;
 		this.configuration();
 		this.router = new Routes();
 		this.routes();
