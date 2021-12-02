@@ -8,6 +8,10 @@ export class Routes {
 		this.db = new DB();
 	}
 
+	/**
+	 * Fetch all data from route "/:address"
+	 * @return {Response} Response when fetching specific data using url query.
+	 */
 	public index = async (req: Request, res: Response) => {
 		await this.db.insert("test", [
 			{
@@ -17,28 +21,27 @@ export class Routes {
 		res.send({ success: true });
 	};
 
+	/**
+	 * Scrape data with post request to address route "/contract"
+	 * @return {Response} Response when finished scraping.
+	 */
 	public deleteTable = async (req: Request, res: Response) => {
-		// await this.db.deleteTable();
 		res.send({ success: true });
 	};
 
 	public createTable = async (req: Request, res: Response) => {
-		// await this.db.createTable();
 		res.send({ success: true });
 	};
 
 	public createDB = async (req: Request, res: Response) => {
-		// await this.db.createDB();
 		res.send({ success: true });
 	};
 
 	public deleteDB = async (req: Request, res: Response) => {
-		// await this.db.deleteDB();
 		res.send({ success: true });
 	};
 
 	public deleteData = async (req: Request, res: Response) => {
-		// await this.db.deleteData();
 		res.send({ success: true });
 	};
 }

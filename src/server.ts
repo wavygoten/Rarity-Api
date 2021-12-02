@@ -16,6 +16,9 @@ class Server {
 		this.routes();
 	}
 
+	/**
+	 * Express Server Configuration
+	 */
 	public configuration() {
 		this.app.use(bodyParser.urlencoded({ extended: false }));
 		this.app.use(bodyParser.json());
@@ -23,6 +26,9 @@ class Server {
 		this.app.use(cors());
 	}
 
+	/**
+	 * Express Router Configuration
+	 */
 	public routes() {
 		this.app.get("/", this.router.index);
 		this.app.get("/deleteTable", this.router.deleteTable);
@@ -32,6 +38,9 @@ class Server {
 		this.app.get("/deleteDB", this.router.deleteDB);
 	}
 
+	/**
+	 * Start Express Server
+	 */
 	public start() {
 		this.app.listen(this.port, () => {
 			console.info("Server is listening on", this.port);
