@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"tsc": "tsc ",
-		"start": "yarn tsc && node ./build/server.js",
+		"start": "rm -rf build && yarn tsc && node ./build/src/server.js",
 		"dev": "nodemon ./src/server.ts",
 		"production": "pm2 start yarn --interpreter bash --name 'rarity-api' -- start"
 	},
