@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import config from "../../config.json";
 export class DB {
-	public pool = new Pool();
+	public pool: Pool;
 	constructor() {
 		// move to env
 		this.pool = new Pool({

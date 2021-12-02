@@ -9,11 +9,11 @@ export class Routes {
 	}
 
 	public index = async (req: Request, res: Response) => {
-		// await this.db.insert("test", [
-		// 	{
-		// 		test: "test",
-		// 	},
-		// ]);
+		await this.db.insert("test", [
+			{
+				test: "test",
+			},
+		]);
 		res.send({ success: true });
 	};
 
