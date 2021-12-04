@@ -15,12 +15,6 @@ export class Routes {
 	public index = async (req: Request, res: Response) => {
 		if (req.method === "GET") {
 			const contractAddress: string = req?.params?.contractaddress;
-			const collectionData: any = await utils.fetchContract(contractAddress);
-			const slug: string = collectionData?.collection?.slug;
-			const collection: any = await utils.fetchCollection(slug);
-			const traits: any = collection?.collection?.traits;
-			const totalSupply: number = collection?.collection?.stats?.count;
-			const traitRarities: any = await utils.checkRarity(traits, totalSupply);
 			const postgresData = await this.db.findOne(
 				"contract",
 				`${contractAddress}`
@@ -55,7 +49,7 @@ export class Routes {
 				return res.status(201).json({ success: false });
 			}
 
-			return res.status(200).json({ success: assets });
+			return res.status(200).json({ success: true });
 		} else {
 			return res.status(400).json({ success: false });
 		}
