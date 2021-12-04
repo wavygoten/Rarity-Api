@@ -1,5 +1,12 @@
 var apiKey: string = "6a5959ab6ed841278cb3545d4f4acc4a";
-
+var data: any = {
+	name: [],
+	contract: [],
+	traits: [],
+	opensea: [],
+	image: [],
+	score: [],
+};
 const _ = {
 	async fetchContract(contract: string) {
 		return await fetch(
@@ -54,31 +61,55 @@ const _ = {
 				console.log(err);
 			});
 	},
-	async fetchAssets(contract: string, supply: number) {
+	async fetchAssets(contract: string, supply: number, traitRarities: any) {
 		let result: any = [];
-		for (let i = 0; i < 1; i++) {
-			await fetch(`https://api.opensea.io/api/v1/asset/${contract}/${i}`, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					"X-API-KEY": apiKey,
-				},
-			})
-				.then((res: any) => res.json())
-				.then((res: any) => {
-					result.push({
-						name: res?.name,
-						traits: res?.traits,
-						opensea: res?.permalink,
-						image: res?.image_preview_url,
-					});
+		let error: boolean = false;
+		if (data.contract.indexOf(contract) === -1) {
+			for (let i = 0; i < 2; i++) {
+				let score: number = 0;
+				await fetch(`https://api.opensea.io/api/v1/asset/${contract}/${i}`, {
+					method: "GET",
+					headers: {
+						Accept: "application/json",
+						"X-API-KEY": apiKey,
+					},
 				})
-				.catch((err: any) => {
-					console.log(err);
-				});
-			await this.sleep(500);
+					.then((res: any) => res.json())
+					.then((res: any) => {
+						// calculate rarity score and match
+						for (let i: number = 0; i < res?.traits.length; i++) {
+							for (let j: number = 0; j < traitRarities.length; j++) {
+								if (
+									res?.traits[i]?.value.toLowerCase() ===
+									traitRarities[j]?.name.toLowerCase()
+								) {
+									score += traitRarities[j]?.calculation;
+								}
+							}
+						}
+						result.push({
+							name: res?.name,
+							tokenid: res?.token_id,
+							contract: contract,
+							traits: res?.traits,
+							opensea: res?.permalink,
+							image: res?.image_preview_url,
+							score: score,
+						});
+						data?.contract.push(contract);
+					})
+					.catch((err: any) => {
+						console.log(err);
+						error = true;
+					});
+				if (error) {
+					break;
+				}
+				await this.sleep(500);
+			}
+		} else {
+			return [];
 		}
-
 		return result;
 	},
 	async checkRarity(data: any, supply: number) {

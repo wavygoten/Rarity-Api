@@ -29,10 +29,9 @@ export class Routes {
 			const contractAddress: string = req?.params?.contractaddress;
 			const collectionData: any = await utils.fetchContract(contractAddress);
 			const slug: string = collectionData?.collection?.slug;
-			const collectionStats: any = await utils.fetchCollectionStats(slug);
 			const collection: any = await utils.fetchCollection(slug);
 			const traits: any = collection?.collection?.traits;
-			const totalSupply: number = collectionStats?.stats?.count;
+			const totalSupply: number = collection?.collection?.stats?.count;
 			const traitRarities: any = await utils.checkRarity(traits, totalSupply);
 			const postgresData = await this.db.findOne(
 				"contract",
@@ -53,11 +52,22 @@ export class Routes {
 			const { contractAddress } = req.body;
 			const collectionData: any = await utils.fetchContract(contractAddress);
 			const slug: string = collectionData?.collection?.slug;
-			const collectionStats: any = await utils.fetchCollectionStats(slug);
-			const totalSupply: number = collectionStats?.stats?.count;
-			const assets: any = await utils.fetchAssets(contractAddress, totalSupply);
-			await this.db.insert(contractAddress, assets);
-			return res.status(200).json({ success: true });
+			const collection: any = await utils.fetchCollection(slug);
+			const traits: any = collection?.collection?.traits;
+			const totalSupply: number = collection?.collection?.stats?.count;
+			const traitRarities: any = await utils.checkRarity(traits, totalSupply);
+			const assets: any = await utils.fetchAssets(
+				contractAddress,
+				totalSupply,
+				traitRarities
+			);
+			if (assets.length > 0) {
+				await this.db.insert(contractAddress, assets);
+			} else {
+				return res.status(201).json({ success: false });
+			}
+
+			return res.status(200).json({ success: assets });
 		} else {
 			return res.status(400).json({ success: false });
 		}
