@@ -1,23 +1,11 @@
 import { Response, Request } from "express";
 import { DB } from "../db/db";
 import utils from "../utils/utils";
-import { ethers } from "ethers";
-import { OpenSeaPort, Network, EventType } from "opensea-js";
-import { OrderSide } from "opensea-js/lib/types";
 
 export class Routes {
 	public db: DB;
-	public cloudflareProvider: ethers.providers.JsonRpcProvider;
-	public seaport: OpenSeaPort;
 	constructor() {
 		this.db = new DB();
-		this.cloudflareProvider = new ethers.providers.JsonRpcProvider(
-			"https://cloudflare-eth.com"
-		);
-		this.seaport = new OpenSeaPort(this.cloudflareProvider, {
-			networkName: Network.Main,
-			apiKey: "6a5959ab6ed841278cb3545d4f4acc4a",
-		});
 	}
 
 	/**
@@ -73,26 +61,26 @@ export class Routes {
 		}
 	};
 
-	public deleteTable = async (req: Request, res: Response) => {
-		await this.db.deleteTable();
-		res.send({ success: true });
-	};
+	// public deleteTable = async (req: Request, res: Response) => {
+	// 	await this.db.deleteTable();
+	// 	res.send({ success: true });
+	// };
 
-	public createTable = async (req: Request, res: Response) => {
-		await this.db.createTable();
-		res.send({ success: true });
-	};
+	// public createTable = async (req: Request, res: Response) => {
+	// 	await this.db.createTable();
+	// 	res.send({ success: true });
+	// };
 
-	public createDB = async (req: Request, res: Response) => {
-		res.send({ success: true });
-	};
+	// public createDB = async (req: Request, res: Response) => {
+	// 	res.send({ success: true });
+	// };
 
-	public deleteDB = async (req: Request, res: Response) => {
-		res.send({ success: true });
-	};
+	// public deleteDB = async (req: Request, res: Response) => {
+	// 	res.send({ success: true });
+	// };
 
-	public deleteData = async (req: Request, res: Response) => {
-		await this.db.deleteData();
-		res.send({ success: true });
-	};
+	// public deleteData = async (req: Request, res: Response) => {
+	// 	await this.db.deleteData();
+	// 	res.send({ success: true });
+	// };
 }

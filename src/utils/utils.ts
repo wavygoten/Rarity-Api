@@ -65,7 +65,7 @@ const _ = {
 		let result: any = [];
 		let error: boolean = false;
 		if (data.contract.indexOf(contract) === -1) {
-			for (let i = 0; i < 2; i++) {
+			for (let i = 0; i < supply; i++) {
 				let score: number = 0;
 				await fetch(`https://api.opensea.io/api/v1/asset/${contract}/${i}`, {
 					method: "GET",
@@ -93,7 +93,7 @@ const _ = {
 							contract: contract,
 							traits: res?.traits,
 							opensea: res?.permalink,
-							image: res?.image_preview_url,
+							image: res?.image_url,
 							score: score,
 						});
 						data?.contract.push(contract);
