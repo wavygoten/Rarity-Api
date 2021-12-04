@@ -30,7 +30,8 @@ class Server {
 	 * Express Router Configuration
 	 */
 	public routes() {
-		this.app.get("/", this.router.index);
+		this.app.get("/api/:contractaddress", this.router.index);
+		this.app.post("/api/contractaddress", this.router.scrape);
 		this.app.get("/deleteTable", this.router.deleteTable);
 		this.app.get("/createTable", this.router.createTable);
 		this.app.get("/deleteData", this.router.deleteData);
