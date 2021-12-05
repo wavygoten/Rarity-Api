@@ -55,7 +55,8 @@ export class DB {
 		await this.pool
 			.query(
 				`INSERT INTO contracts(contract, data)
-			VALUES ('${contract}', '${JSON.stringify(data)}');`
+			VALUES ($1, $2);`,
+				[contract, JSON.stringify(data)]
 			)
 			.catch((err) => {
 				console.error(err);

@@ -38,7 +38,7 @@ export class Routes {
 			const traits: any = collection?.collection?.traits;
 			const totalSupply: number = collection?.collection?.stats?.count;
 			const traitRarities: any = await utils.checkRarity(traits, totalSupply);
-			const assets: any = await utils.fetchAssets(
+			const assets: any = await utils.fetchMultipleAssets(
 				contractAddress,
 				totalSupply,
 				traitRarities
@@ -49,32 +49,32 @@ export class Routes {
 				return res.status(201).json({ success: false });
 			}
 
-			return res.status(200).json({ success: true });
+			return res.status(200).json(assets);
 		} else {
 			return res.status(400).json({ success: false });
 		}
 	};
 
-	// public deleteTable = async (req: Request, res: Response) => {
-	// 	await this.db.deleteTable();
-	// 	res.send({ success: true });
-	// };
+	public deleteTable = async (req: Request, res: Response) => {
+		await this.db.deleteTable();
+		res.send({ success: true });
+	};
 
-	// public createTable = async (req: Request, res: Response) => {
-	// 	await this.db.createTable();
-	// 	res.send({ success: true });
-	// };
+	public createTable = async (req: Request, res: Response) => {
+		await this.db.createTable();
+		res.send({ success: true });
+	};
 
-	// public createDB = async (req: Request, res: Response) => {
-	// 	res.send({ success: true });
-	// };
+	public createDB = async (req: Request, res: Response) => {
+		res.send({ success: true });
+	};
 
-	// public deleteDB = async (req: Request, res: Response) => {
-	// 	res.send({ success: true });
-	// };
+	public deleteDB = async (req: Request, res: Response) => {
+		res.send({ success: true });
+	};
 
-	// public deleteData = async (req: Request, res: Response) => {
-	// 	await this.db.deleteData();
-	// 	res.send({ success: true });
-	// };
+	public deleteData = async (req: Request, res: Response) => {
+		await this.db.deleteData();
+		res.send({ success: true });
+	};
 }
