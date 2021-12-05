@@ -121,7 +121,7 @@ const _ = {
 		let result: any = [];
 		let error: boolean = false;
 		if (data.contract.indexOf(contract) === -1) {
-			for (let i = 0; i < 60; i += 30) {
+			for (let i = 0; i < supply; i += 30) {
 				const params = new URLSearchParams();
 				for (let j = i; j < i + 30; j++) {
 					params.append("token_ids", `${j}`);
@@ -175,7 +175,7 @@ const _ = {
 				if (error) {
 					break;
 				}
-				await this.sleep(1000);
+				await this.sleep(2000);
 			}
 		} else {
 			return [];
