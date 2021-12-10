@@ -1,13 +1,19 @@
 import React from "react";
 import "./App.css";
 import Input from "./components/SearchInput";
+import SearchTokens from "./components/SearchTokens";
 import twitterlogo from "./images/twitter.svg";
 import discordlogo from "./images/discord.svg";
 import instagramlogo from "./images/instagram-icon.svg";
 import metamasklogo from "./images/metamask.svg";
 import linklogo from "./images/link.svg";
 import { useMediaQuery, mediaOptions } from "./hooks/useMediaQuery";
+
 function App() {
+  const [searchContract, setSearchContract] = React.useState<string>("");
+  const [searchToken, setSearchToken] = React.useState<string>("");
+  const [data, setData] = React.useState<any>();
+
   let isTablet = useMediaQuery(mediaOptions.md);
 
   return (
@@ -88,28 +94,35 @@ function App() {
 
       {/* Tabs Section */}
       <div className="tabs-wrapper flex flex-col sm:flex-row justify-between px-2 py-16 whitespace-nowrap">
-        <div className="traits-container flex flex-col text-sm rounded-md mx-2 sm:mr-4 sm:ml-8 mb-4 sm:mb-0 py-3 px-6 shadow-lg">
-          <div className="flex items-center justify-between">
-            <div>Collection Filters</div>
-            <div className="cursor-pointer border-b-2 border-transparent hover:border-gray-500 ease-linear duration-75">
-              Filter
+        <div className="traits-container flex flex-col shadow-lg rounded-md text-sm mx-2 sm:mr-4 sm:ml-8 mb-4 sm:mb-0">
+          <div className="flex flex-col p-5">
+            <div className="flex mb-4 border-b border-gray-500 pb-2">
+              <div>Collection Filter</div>
             </div>
+            <SearchTokens name="tokenIds" placeholder="Token ID" />
           </div>
         </div>
-        <div className="cards-container flex flex-col flex-1 text-sm rounded-md mx-2 sm:mr-8 py-3 px-6 shadow-lg">
+        <div className="cards-container flex flex-col flex-1 text-sm rounded-md mx-0 sm:ml-2 py-3 px-6">
           <div className="flex items-center justify-between">
-            <div>hi</div>
+            <div>0 Items</div>
+            {/* Only show when data is */}
+            {/* <div className="pagination flex justify-center">
+              <div className="previous mx-2">Prev</div>
+              <div className="page-number mx-2">1</div>
+              <div className="next mx-2">Next</div>
+            </div> */}
+            <select className="sort-select shadow-md">
+              <option value="token-id">Sort by Token ID</option>
+              <option value="rank">Sort by Rank</option>
+            </select>
           </div>
         </div>
       </div>
-      {/* Content Section */}
+      {/* End of Tabs Section */}
 
-      <div className="content-wrapper">
-        <div className="filter"></div>
-        <div className="cards-containe"></div>
-      </div>
       {/* Footer Section */}
       <div className="footer-wrapper"></div>
+      {/* End of Footer Section */}
     </div>
   );
 }
