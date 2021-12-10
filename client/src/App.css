@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+
+:root {
+	--main-dark: #191a1d;
+	--secondary-dark: #1f2024;
+	--main-light: #fff;
+	--secondary-light: #f4f4f4;
+	--main-theme: #356957;
+	--hover-theme: #42836d;
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		color: var(--main-light);
+		background-color: var(--main-dark);
+	}
+	input {
+		background-color: var(--secondary-dark);
+		color: var(--secondary-light);
+	}
+	.search-container {
+		background-color: var(--secondary-dark);
+		color: var(--secondary-light);
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	html {
+		color: var(--main-dark);
+		background-color: var(--main-light);
+	}
+	input {
+		background-color: var(--secondary-light);
+		color: var(--secondary-dark);
+		border: var(--main-theme);
+	}
+	.search-container {
+		background-color: var(--secondary-light);
+		color: var(--secondary-dark);
+	}
+}
+
+* {
+	box-sizing: border-box;
+	margin: auto;
+	padding: 0;
+	font-family: "Rubik", sans-serif;
+}
+
+.main-wrapper {
+	max-width: 1536px;
+}
+
+.logo {
+	font-size: calc(16px + (32 - 18) * ((100vw - 300px) / (1600 - 300)));
+	user-select: none;
+}
+
+.search {
+	flex: 0.5 0 auto;
+}
+.search input {
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+.search-btn {
+	background-color: var(--main-theme);
+	border-bottom-right-radius: 6px;
+	border-top-right-radius: 6px;
+}
+.search-btn:hover {
+	background-color: var(--hover-theme);
+	transition: 75ms ease-in;
+}
+.links div {
+	margin: 0 1.5rem;
+}
+
+.wallet-container {
+	border: 0.25px solid var(--main-theme);
+}
+.wallet-container:hover {
+	background-color: var(--hover-theme);
+	cursor: pointer;
+}
+
+.links img {
+	width: 20px;
+	height: auto;
+	opacity: 0.7;
+}
+
+.links img:hover {
+	opacity: 1;
+	transition: 125ms ease-in;
+	cursor: pointer;
+}
+
+.links-container div {
+	background: linear-gradient(var(--hover-theme) 0 0) var(--p, 100%) 100% /
+		var(--d, 0) 2px no-repeat;
+}
+.links-container div:hover {
+	cursor: pointer;
+	transition: 275ms, background-position 0s 0.3s;
+	--d: 100%;
+	--p: 0%;
+}
+
+.wallet img {
+	width: 22px;
+	height: auto;
+}
+
+input:focus,
+input:active {
+	border-left: var(--main-theme) 2px solid;
+	border-top: var(--main-theme) 2px solid;
+	border-bottom: var(--main-theme) 2px solid;
+	outline: 0 none;
+}
+
+input {
+	border-left: transparent 2px solid;
+	border-top: transparent 2px solid;
+	border-bottom: transparent 2px solid;
+}

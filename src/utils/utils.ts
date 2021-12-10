@@ -175,7 +175,7 @@ const _ = {
 				if (error) {
 					break;
 				}
-				await this.sleep(2000);
+				await this.sleep(15000);
 			}
 		} else {
 			return [];

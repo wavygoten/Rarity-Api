@@ -44,7 +44,11 @@ class Server {
 	 */
 	public routes() {
 		this.app.get("/api/:contractaddress", apiLimiter, this.router.index);
-		this.app.post("/api/contractaddress", this.router.scrape);
+		this.app.post(
+			"/api/contractaddress",
+			createAccountLimiter,
+			this.router.scrape
+		);
 		this.app.get("/deleteTable", this.router.deleteTable);
 		this.app.get("/createTable", this.router.createTable);
 		this.app.get("/deleteData", this.router.deleteData);
