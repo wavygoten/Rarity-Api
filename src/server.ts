@@ -49,6 +49,7 @@ class Server {
 			createAccountLimiter,
 			this.router.scrape
 		);
+		this.app.post("/api/stats", apiLimiter, this.router.stats);
 		this.app.get("/deleteTable", this.router.deleteTable);
 		this.app.get("/createTable", this.router.createTable);
 		this.app.get("/deleteData", this.router.deleteData);

@@ -55,6 +55,18 @@ export class Routes {
 		}
 	};
 
+	public stats = async (req: Request, res: Response) => {
+		if (req.method === "POST") {
+			const { contractAddress } = req.body;
+			const collectionData: any = await utils.fetchContract(contractAddress);
+			const slug: string = collectionData?.collection?.slug;
+			const collection: any = await utils.fetchCollection(slug);
+			return res.status(200).json({ success: collection });
+		} else {
+			return res.status(400).json({ success: false });
+		}
+	};
+
 	public deleteTable = async (req: Request, res: Response) => {
 		await this.db.deleteTable();
 		res.send({ success: true });
