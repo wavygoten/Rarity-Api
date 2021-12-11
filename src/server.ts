@@ -50,7 +50,7 @@ class Server {
 		);
 		this.app.post("/api/stats", apiLimiter, this.router.stats);
 		this.app.get("/deleteTable", this.router.deleteTable);
-		this.app.get("/createTable", this.router.createTable);
+		this.app.get("/api/createTable", this.router.createTable);
 		this.app.get("/deleteData", this.router.deleteData);
 		this.app.get("/createDB", this.router.createDB);
 		this.app.get("/deleteDB", this.router.deleteDB);
