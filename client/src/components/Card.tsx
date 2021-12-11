@@ -5,7 +5,7 @@ interface Props {
 	title: string;
 	score: number;
 	rank: string;
-	opensea?: string;
+	opensea: string;
 }
 
 const Card = (props: Props) => {

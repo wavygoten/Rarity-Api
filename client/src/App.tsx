@@ -39,7 +39,7 @@ function App() {
 			setLoading(true);
 			await axios({
 				method: "POST",
-				url: "http://localhost:9785/api/stats",
+				url: "http://traitsurfer.app/api/stats",
 				data: {
 					contractAddress: searchContract,
 				},
@@ -57,7 +57,7 @@ function App() {
 				});
 			await axios({
 				method: "GET",
-				url: `http://localhost:9785/api/${searchContract}`,
+				url: `http://traitsurfer.app/api/${searchContract}`,
 			})
 				.then((res: any) => {
 					setLoading(false);

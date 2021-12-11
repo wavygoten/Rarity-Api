@@ -4,7 +4,6 @@ import helmet from "helmet";
 import cors from "cors";
 import bodyParser from "body-parser";
 import config from "../config.json";
-
 const rateLimit = require("express-rate-limit");
 const createAccountLimiter = rateLimit({
 	windowMs: 30 * 60 * 1000, // 30 min window

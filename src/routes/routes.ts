@@ -68,7 +68,7 @@ export class Routes {
 	};
 
 	public deleteTable = async (req: Request, res: Response) => {
-		await this.db.deleteTable();
+		// await this.db.deleteTable();
 		res.send({ success: true });
 	};
 
@@ -86,7 +86,7 @@ export class Routes {
 	};
 
 	public deleteData = async (req: Request, res: Response) => {
-		await this.db.deleteData();
+		// await this.db.deleteData();
 		res.send({ success: true });
 	};
 }
