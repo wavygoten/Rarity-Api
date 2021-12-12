@@ -6,6 +6,7 @@ interface Props {
 	score: number;
 	rank: string;
 	opensea: string;
+	details?: any;
 }
 
 const Card = (props: Props) => {
@@ -15,11 +16,11 @@ const Card = (props: Props) => {
 			<div className="card-title text-md sm:text-lg">
 				<div>{props.title}</div>{" "}
 			</div>
-			<div className="card-score text-sm sm:text-md">Score {props.score}</div>
-			<div className="card-rank flex justify-between text-sm sm:text-md">
+			<div className="card-score text-sm">Score {props.score}</div>
+			<div className="card-rank flex justify-between text-sm">
 				<div>Rank {props.rank}</div>
 			</div>
-			<div className="opensea-card text-sm sm:text-md">
+			<div className="opensea-card text-sm">
 				<a
 					href={props.opensea}
 					target="_blank"

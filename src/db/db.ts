@@ -75,7 +75,7 @@ export class DB {
 	 * Deletes a new table called contracts.
 	 */
 	async deleteTable() {
-		await this.pool.query(`DROP TABLE IF EXISTS contracts`).catch((err) => {
+		await this.pool.query(`DROP TABLE IF EXISTS contracts;`).catch((err) => {
 			console.error(err);
 		});
 	}
