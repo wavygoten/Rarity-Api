@@ -7,8 +7,8 @@ interface Props {
 
 const Stats = (props: Props) => {
 	return (
-		<div className="props.stats-wrapper flex flex-wrap justify-center sm:justify-between px-2 py-12">
-			<div className="props.stats-container sm:mx-0 flex text-lg text-center mb-12 md:mb-0">
+		<div className="stats-wrapper flex flex-wrap justify-center sm:justify-between px-2 py-12">
+			<div className="stats-container sm:mx-0 flex text-lg text-center mb-12 md:mb-0">
 				<div className="floors ml-0 sm:ml-8 mr-4 pl-4 sm:mr-8 sm:pl-8 border-l border-gray-500">
 					<div className="pb-2">Floor</div>
 					<div>
