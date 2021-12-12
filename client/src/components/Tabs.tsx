@@ -27,7 +27,7 @@ const Tabs = (props: Props) => {
 					/>
 				</div>
 			</div>
-			<div className="cards-container flex flex-col flex-1 text-sm rounded-md mx-0 sm:ml-2 px-6">
+			<div className="cards-container flex flex-col flex-1 text-sm rounded-md mx-2 sm:ml-2 sm:mr-6">
 				<div className="flex items-center justify-between mb-2">
 					<div>{props.data?.length} Items</div>
 					{props.data ? (

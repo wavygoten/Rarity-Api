@@ -38,7 +38,7 @@ function App() {
 			})
 				.then((res: any) => {
 					if (res?.data?.success?.collection?.name !== "undefined") {
-						setStats(res?.data?.success?.collection?.stats);
+						setStats(res?.data?.success?.collection);
 					} else {
 						console.log("No collection found with stats");
 						setStats([]);
@@ -80,7 +80,7 @@ function App() {
 			{/* End of Navbar Section */}
 
 			{/* Stats Section */}
-			<Stats stats={stats} />
+			<Stats collection={stats} />
 			{/* End of Stats Section */}
 
 			{/* Tabs Section */}
