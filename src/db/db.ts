@@ -66,7 +66,7 @@ export class DB {
    * Delete all data within contracts table.
    */
   async deleteData() {
-    await this.pool.query(`DELETE FROM contracts;`).catch((err) => {
+    await this.pool.query(`DELETE FROM contracts`).catch((err) => {
       console.error(err);
     });
   }

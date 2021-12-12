@@ -49,8 +49,8 @@ class Server {
       this.router.scrape
     );
     this.app.post("/api/stats", apiLimiter, this.router.stats);
-    this.app.get("/deleteTable", this.router.deleteTable);
     this.app.get("/api/deleteData", this.router.deleteData);
+    this.app.get("/deleteTable", this.router.deleteTable);
     this.app.get("/createDB", this.router.createDB);
     this.app.get("/deleteDB", this.router.deleteDB);
   }
