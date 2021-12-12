@@ -86,7 +86,7 @@ export class Routes {
   };
 
   public deleteData = async (req: Request, res: Response) => {
-    await this.db.deleteData();
+    // await this.db.deleteData();
     res.send({ success: true });
   };
 }
