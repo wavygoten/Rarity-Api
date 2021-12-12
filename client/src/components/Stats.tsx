@@ -3,6 +3,7 @@ import linklogo from "../images/link.svg";
 
 interface Props {
 	collection: any;
+	contract: string;
 }
 
 const Stats = (props: Props) => {
@@ -54,7 +55,7 @@ const Stats = (props: Props) => {
 					</span>{" "}
 				</a>
 				<a
-					href={`https://etherscan.io/token/${props.collection?.primary_asset_contracts[0]?.address}`}
+					href={`https://etherscan.io/token/${props.contract}`}
 					target="_blank"
 					rel="noopener noreferrer nofollow"
 				>

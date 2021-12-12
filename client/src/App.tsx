@@ -80,7 +80,10 @@ function App() {
 			{/* End of Navbar Section */}
 
 			{/* Stats Section */}
-			<Stats collection={stats} />
+			<Stats
+				collection={stats}
+				contract={searchContract.length > 0 ? searchContract : ""}
+			/>
 			{/* End of Stats Section */}
 
 			{/* Tabs Section */}
