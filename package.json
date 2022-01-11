@@ -9,7 +9,7 @@
 		"start": "rm -rf build && yarn tsc && node ./build/src/server.js",
 		"dev": "nodemon ./src/server.ts",
 		"production": "pm2 start yarn --interpreter bash --name 'rarity-api' -- start",
-		"git": "git add . && git commit -m 'fix' && git push -u origin main"
+		"git": "git add . && git commit -m 'fix' && git push"
 	},
 	"keywords": [],
 	"author": "",
