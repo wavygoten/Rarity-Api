@@ -31,7 +31,8 @@ function App() {
 			setLoading(true);
 			await axios({
 				method: "POST",
-				url: "https://traitsurfer.app/api/stats", // production
+				// url: "https://traitsurfer.app/api/stats" // production
+				url: "http://localhost:9785/api/stats", // development
 				data: {
 					contractAddress: searchContract,
 				},
@@ -49,7 +50,8 @@ function App() {
 				});
 			await axios({
 				method: "GET",
-				url: `https://traitsurfer.app/api/${searchContract}`, // production
+				// url: `https://traitsurfer.app/api/${searchContract}` // production
+				url: `http://localhost:9785/api/${searchContract}`, // development
 			})
 				.then((res: any) => {
 					setLoading(false);

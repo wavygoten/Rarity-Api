@@ -99,7 +99,7 @@ export class DB {
 				break;
 			case "contract":
 				await this.pool
-					.query(`SELECT * FROM contracts WHERE contract='${value}'`)
+					.query(`SELECT * FROM contracts WHERE contract ILIKE '${value}'`)
 					.then((res) => {
 						if (!res.rows[0]) {
 							data = { success: false };
