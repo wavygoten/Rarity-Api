@@ -16,7 +16,6 @@ interface Props {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   onMetaMaskClick?: (e: React.MouseEvent<HTMLElement>) => void;
   statusMsg?: string;
-  errorMsg?: string;
 }
 
 const Navbar = (props: Props) => {

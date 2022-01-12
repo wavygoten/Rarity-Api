@@ -13,6 +13,8 @@ declare global {
     web3?: any;
   }
 }
+
+// const baseURI = {process.env.NODE_ENV ==="development" : "http://localhost:9785/api/stats" ? "https://traitsurfer.app/api/stats"};
 function App() {
   const [searchContract, setSearchContract] = React.useState<string>("");
   const [searchToken, setSearchToken] = React.useState<string>("");

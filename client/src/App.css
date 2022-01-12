@@ -205,7 +205,13 @@
 }
 
 .card {
-  flex: 0 0 23%;
+  flex: 0 0 48%;
+}
+
+@media screen and (min-width: 640px) {
+  .card {
+    flex: 0 0 23%;
+  }
 }
 
 .card * {
