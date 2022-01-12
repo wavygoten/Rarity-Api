@@ -6,13 +6,10 @@ interface Props {
   loading: boolean;
   searchToken: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  matchExact?: any;
 }
 
 const Tabs = (props: Props) => {
-  function matchExact(r: string, str: string) {
-    var match = str.match(r);
-    return match && str === match[0];
-  }
   return (
     <div className="tabs-wrapper flex flex-col sm:flex-row justify-between px-2 py-16 whitespace-nowrap">
       <div className="traits-container flex flex-col shadow-lg rounded-md text-sm mx-2 sm:mr-4 sm:ml-8 mb-4 sm:mb-0 max-h">
@@ -50,7 +47,7 @@ const Tabs = (props: Props) => {
             React.Children.toArray(
               props.data?.map((element: any, idx: number) => {
                 if (props.searchToken.length > 0) {
-                  if (matchExact(props.searchToken, element?.tokenid)) {
+                  if (props.matchExact(props?.searchToken, element?.tokenid)) {
                     return (
                       <Card
                         src={element?.image}
