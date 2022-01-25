@@ -80,6 +80,10 @@ export class DB {
 		});
 	}
 
+	/**
+	 * Finds a contract based on its value, NOT case-sensitive
+	 * @return {Promise} Data found in PostgreSQL
+	 */
 	async findOne(column: any, value: any) {
 		let data: any;
 		switch (column) {
