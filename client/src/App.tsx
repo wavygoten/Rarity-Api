@@ -183,6 +183,7 @@ function App() {
 				matchExact={matchExact}
 				isTablet={isTablet}
 				handleSort={handleSort}
+				itemsPerPage={20}
 			/>
 			{/* End of Tabs Section */}
 		</div>

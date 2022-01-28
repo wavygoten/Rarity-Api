@@ -15,8 +15,8 @@ export function usePagination(data: any, itemsPerPage: number) {
 		setCurrentPage(Math.min(pageNumber, maxPage));
 	}
 	function currentData() {
-		const begin = (currentPage - 1) * 15;
-		const end = begin + 15;
+		const begin = (currentPage - 1) * itemsPerPage;
+		const end = begin + itemsPerPage;
 		return data.slice(begin, end);
 	}
 

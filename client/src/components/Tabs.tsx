@@ -11,12 +11,16 @@ interface Props {
 	matchExact?: any;
 	isTablet?: any;
 	handleSort?: any;
+	itemsPerPage: number;
 }
 
 const Tabs = (props: Props) => {
 	const ref = React.useRef<any>(null);
 	const width = useCards(ref);
 	const [page, setPage] = React.useState<number>(1);
+	const data = [...props.data]; // all data
+	const _data = usePagination(props.data, props.itemsPerPage); // pagination;
+
 	const cardsPerRow = props.isTablet
 		? Math.floor(width / 200)
 		: Math.floor(width / 180);
@@ -28,9 +32,8 @@ const Tabs = (props: Props) => {
 		props.isTablet
 			? Math.floor(idx % cardsPerRow) * 200 + "px"
 			: Math.floor(idx % cardsPerRow) * 180 + "px";
-	const totalHeight = Math.ceil(12 / cardsPerRow) * 350;
-	const data = [...props.data]; // all data
-	const _data = usePagination(props.data, 15); // pagination
+	const totalHeight = Math.ceil(props.itemsPerPage / cardsPerRow) * 350;
+
 	const handleNext = () => {
 		setPage((page: number) => page + 1);
 		_data.next();
