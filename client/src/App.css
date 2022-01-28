@@ -204,6 +204,17 @@
 	border: transparent 2px solid;
 }
 
+.next,
+.previous {
+	user-select: none;
+}
+.next:hover,
+.previous:hover {
+	cursor: pointer;
+	color: var(--hover-theme);
+	transition: 150ms ease;
+}
+
 .card {
 	transition: 0.4s;
 	min-width: 180px;

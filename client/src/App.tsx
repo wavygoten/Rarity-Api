@@ -22,6 +22,7 @@ function App() {
 	const [loading, setLoading] = React.useState<boolean>(false);
 	const [status, setStatus] = React.useState<string | undefined>("");
 	const [address, setAddress] = React.useState<string | undefined>("");
+	const [sortVar, setSortVar] = React.useState<string>("");
 
 	let isTablet = useMediaQuery(mediaOptions.md);
 	const Toast = Swal.mixin({
@@ -30,7 +31,27 @@ function App() {
 		showConfirmButton: false,
 		timer: 3500,
 	});
+	function handleSort(e: any) {
+		switch (e?.target?.value) {
+			case "token-id":
+				setSortVar("token-id");
+				break;
+			case "rank":
+				setSortVar("rank");
+				break;
+		}
+	}
 
+	function sortRank(data: any) {
+		var obj = [...data];
+		obj.sort((a, b) => a?.rank - b?.rank);
+		setData(obj);
+	}
+	function sortToken(data: any) {
+		var obj = [...data];
+		obj.sort((a, b) => a?.tokenid - b?.tokenid);
+		setData(obj);
+	}
 	function matchExact(r: string, str: string) {
 		try {
 			var match = str?.match(r);
@@ -112,7 +133,19 @@ function App() {
 		setAddress(_?.address);
 		setStatus(_?.status);
 	}
-
+	//sorter
+	React.useEffect(() => {
+		const sorter = () => {
+			if (sortVar === "rank") {
+				sortRank(data);
+			}
+			if (sortVar === "token-id") {
+				sortToken(data);
+			}
+		};
+		sorter();
+	}, [sortVar]);
+	// web3
 	React.useEffect(() => {
 		const __ = async () => {
 			const _ = await getCurrentWalletConnected();
@@ -149,6 +182,7 @@ function App() {
 				onChange={handleChange}
 				matchExact={matchExact}
 				isTablet={isTablet}
+				handleSort={handleSort}
 			/>
 			{/* End of Tabs Section */}
 		</div>
