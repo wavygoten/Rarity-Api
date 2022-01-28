@@ -29,14 +29,13 @@ const Tabs = (props: Props) => {
 		const updateWindowDimensions = () => {
 			setWidth(ref?.current?.offsetWidth);
 		};
-		const setDimension = () => {
-			setWidth(ref?.current?.offsetWidth);
-		};
 		window.addEventListener("resize", updateWindowDimensions);
-		window.addEventListener("load", setDimension);
+		window.addEventListener("load", updateWindowDimensions);
+		window.addEventListener("click", updateWindowDimensions);
 		return () => {
 			window.removeEventListener("resize", updateWindowDimensions);
-			window.removeEventListener("load", setDimension);
+			window.removeEventListener("load", updateWindowDimensions);
+			window.removeEventListener("click", updateWindowDimensions);
 		};
 	}, [ref]);
 	return (
