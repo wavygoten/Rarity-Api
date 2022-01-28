@@ -13,11 +13,11 @@ interface Props {
 const Card = (props: Props) => {
 	return (
 		<div
-			className="card absolute flex flex-col text-left text-lg break-words"
+			className="card absolute flex flex-col text-md sm:text-lg"
 			style={props.style}
 		>
 			<img className="" src={props.src} alt="" />
-			<div className="card-title text-md sm:text-lg">
+			<div className="card-title ">
 				<div>{props.title}</div>{" "}
 			</div>
 			<div className="card-score text-sm">Score {props.score}</div>
