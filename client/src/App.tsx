@@ -14,7 +14,6 @@ declare global {
 	}
 }
 
-// const baseURI = {process.env.NODE_ENV ==="development" : "http://localhost:9785/api/stats" ? "https://traitsurfer.app/api/stats"};
 function App() {
 	const [searchContract, setSearchContract] = React.useState<string>("");
 	const [searchToken, setSearchToken] = React.useState<string>("");
@@ -30,11 +29,6 @@ function App() {
 		position: "bottom-end",
 		showConfirmButton: false,
 		timer: 3500,
-
-		// didOpen: (toast) => {
-		//   toast.addEventListener("mouseenter", Swal.stopTimer);
-		//   toast.addEventListener("mouseleave", Swal.resumeTimer);
-		// },
 	});
 
 	function matchExact(r: string, str: string) {
@@ -62,7 +56,6 @@ function App() {
 			await axios({
 				method: "POST",
 				url: "https://traitsurfer.app/api/stats", // production
-				// url: "http://localhost:9785/api/stats",
 				data: {
 					contractAddress: searchContract,
 				},
@@ -81,7 +74,6 @@ function App() {
 			await axios({
 				method: "GET",
 				url: `https://traitsurfer.app/api/${searchContract}`, // production
-				// url: `http://localhost:9785/api/${searchContract}`,
 			})
 				.then((res: any) => {
 					setLoading(false);
