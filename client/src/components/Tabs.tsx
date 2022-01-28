@@ -29,8 +29,8 @@ const Tabs = (props: Props) => {
 			? Math.floor(idx % cardsPerRow) * 200 + "px"
 			: Math.floor(idx % cardsPerRow) * 180 + "px";
 	const totalHeight = Math.ceil(12 / cardsPerRow) * 350;
-
-	const _data = usePagination(props.data, 15);
+	const data = [...props.data]; // all data
+	const _data = usePagination(props.data, 15); // pagination
 	const handleNext = () => {
 		setPage((page: number) => page + 1);
 		_data.next();
@@ -121,7 +121,7 @@ const Tabs = (props: Props) => {
 								})
 						  )
 						: React.Children.toArray(
-								props.data?.map((element: any, idx: number) => {
+								data?.map((element: any, idx: number) => {
 									if (props.searchToken.length > 0) {
 										if (
 											props.matchExact(props?.searchToken, element?.tokenid)
