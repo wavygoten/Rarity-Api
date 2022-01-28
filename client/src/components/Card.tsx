@@ -7,12 +7,16 @@ interface Props {
 	rank: string;
 	opensea: string;
 	details?: any;
+	style?: React.CSSProperties;
 }
 
 const Card = (props: Props) => {
 	return (
-		<div className="card flex flex-col flex-nowrap text-left text-md sm:text-lg break-words sm:m-2">
-			<img className="rounded-md" src={props.src} alt="" />
+		<div
+			className="card absolute flex flex-col text-left text-lg break-words"
+			style={props.style}
+		>
+			<img className="" src={props.src} alt="" />
 			<div className="card-title text-md sm:text-lg">
 				<div>{props.title}</div>{" "}
 			</div>

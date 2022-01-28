@@ -156,6 +156,7 @@ function App() {
 				searchToken={searchToken}
 				onChange={handleChange}
 				matchExact={matchExact}
+				isTablet={isTablet}
 			/>
 			{/* End of Tabs Section */}
 		</div>
