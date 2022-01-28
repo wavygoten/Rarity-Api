@@ -5,6 +5,7 @@ import { useCards } from "../hooks/useCards";
 import { usePagination } from "../hooks/usePagination";
 interface Props {
 	data: any;
+	paginationData: any;
 	loading: boolean;
 	searchToken: string;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -12,14 +13,15 @@ interface Props {
 	isTablet?: any;
 	handleSort?: any;
 	itemsPerPage: number;
+	handleNext?: any;
+	handlePrev?: any;
+	page?: number;
 }
 
 const Tabs = (props: Props) => {
 	const ref = React.useRef<any>(null);
 	const width = useCards(ref);
-	const [page, setPage] = React.useState<number>(1);
 	const data = [...props.data]; // all data
-	const _data = usePagination(props.data, props.itemsPerPage); // pagination;
 
 	const cardsPerRow = props.isTablet
 		? Math.floor(width / 200)
@@ -33,20 +35,6 @@ const Tabs = (props: Props) => {
 			? Math.floor(idx % cardsPerRow) * 200 + "px"
 			: Math.floor(idx % cardsPerRow) * 180 + "px";
 	const totalHeight = Math.ceil(props.itemsPerPage / cardsPerRow) * 350;
-
-	const handleNext = () => {
-		setPage((page: number) => page + 1);
-		_data.next();
-	};
-
-	const handlePrev = () => {
-		if (page !== 1) {
-			setPage((page: number) => page - 1);
-			_data.prev();
-		} else {
-			_data.prev();
-		}
-	};
 
 	return (
 		<div className="tabs-wrapper flex flex-col sm:flex-row justify-between px-2 py-16 whitespace-nowrap">
@@ -67,7 +55,7 @@ const Tabs = (props: Props) => {
 					<div>{props.data?.length} Items</div>
 					{props.data ? (
 						<div className="pagination flex justify-center">
-							<div className="previous mx-2" onClick={handlePrev}>
+							<div className="previous mx-2" onClick={props.handlePrev}>
 								Prev
 							</div>
 							<div
@@ -80,9 +68,9 @@ const Tabs = (props: Props) => {
 									textAlign: "center",
 								}}
 							>
-								{page}
+								{props.page}
 							</div>
-							<div className="next mx-2" onClick={handleNext}>
+							<div className="next mx-2" onClick={props.handleNext}>
 								Next
 							</div>
 						</div>
@@ -105,23 +93,27 @@ const Tabs = (props: Props) => {
 					{props.loading ? <>Loading</> : <></>}
 					{props.data && !props.searchToken
 						? React.Children.toArray(
-								_data?.currentData()?.map((element: any, idx: number) => {
-									if (idx < 20) {
-										return (
-											<Card
-												src={element?.image}
-												title={element?.name}
-												score={element?.score.toFixed(2)}
-												rank={element?.rank}
-												opensea={element?.opensea}
-												style={{
-													transform: `translate(${fnLeft(idx)}, ${fnTop(idx)})`,
-												}}
-											/>
-										);
-									}
-									return <></>;
-								})
+								props.paginationData
+									?.currentData()
+									?.map((element: any, idx: number) => {
+										if (idx < props.itemsPerPage) {
+											return (
+												<Card
+													src={element?.image}
+													title={element?.name}
+													score={element?.score.toFixed(2)}
+													rank={element?.rank}
+													opensea={element?.opensea}
+													style={{
+														transform: `translate(${fnLeft(idx)}, ${fnTop(
+															idx
+														)})`,
+													}}
+												/>
+											);
+										}
+										return <></>;
+									})
 						  )
 						: React.Children.toArray(
 								data?.map((element: any, idx: number) => {

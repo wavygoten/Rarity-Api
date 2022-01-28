@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar";
 import Stats from "./components/Stats";
 import Tabs from "./components/Tabs";
 import { useMediaQuery, mediaOptions } from "./hooks/useMediaQuery";
+import { usePagination } from "./hooks/usePagination";
+
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -23,6 +25,9 @@ function App() {
 	const [status, setStatus] = React.useState<string | undefined>("");
 	const [address, setAddress] = React.useState<string | undefined>("");
 	const [sortVar, setSortVar] = React.useState<string>("");
+	const [page, setPage] = React.useState<number>(1);
+	const itemsPerPage: number = 20;
+	const _data = usePagination(data, itemsPerPage); // pagination;
 
 	let isTablet = useMediaQuery(mediaOptions.md);
 	const Toast = Swal.mixin({
@@ -31,6 +36,7 @@ function App() {
 		showConfirmButton: false,
 		timer: 3500,
 	});
+
 	function handleSort(e: any) {
 		switch (e?.target?.value) {
 			case "token-id":
@@ -47,11 +53,27 @@ function App() {
 		obj.sort((a, b) => a?.rank - b?.rank);
 		setData(obj);
 	}
+
 	function sortToken(data: any) {
 		var obj = [...data];
 		obj.sort((a, b) => a?.tokenid - b?.tokenid);
 		setData(obj);
 	}
+
+	const handleNext = () => {
+		setPage((page: number) => page + 1);
+		_data.next();
+	};
+
+	const handlePrev = () => {
+		if (page !== 1) {
+			setPage((page: number) => page - 1);
+			_data.prev();
+		} else {
+			_data.prev();
+		}
+	};
+
 	function matchExact(r: string, str: string) {
 		try {
 			var match = str?.match(r);
@@ -177,13 +199,17 @@ function App() {
 			{/* Tabs Section */}
 			<Tabs
 				data={data}
+				paginationData={_data}
 				loading={loading}
 				searchToken={searchToken}
 				onChange={handleChange}
 				matchExact={matchExact}
 				isTablet={isTablet}
 				handleSort={handleSort}
-				itemsPerPage={20}
+				handleNext={handleNext}
+				handlePrev={handlePrev}
+				itemsPerPage={itemsPerPage}
+				page={page}
 			/>
 			{/* End of Tabs Section */}
 		</div>
