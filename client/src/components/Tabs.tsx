@@ -12,8 +12,8 @@ interface Props {
 	isTablet: boolean;
 	handleSort: React.ChangeEventHandler<HTMLSelectElement>;
 	itemsPerPage: number;
-	handleNext: () => void;
-	handlePrev: () => void;
+	handleNext: any;
+	handlePrev: any;
 	page: number;
 }
 
