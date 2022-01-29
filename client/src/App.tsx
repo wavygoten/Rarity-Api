@@ -5,7 +5,6 @@ import Stats from "./components/Stats";
 import Tabs from "./components/Tabs";
 import { useMediaQuery, mediaOptions } from "./hooks/useMediaQuery";
 import { usePagination } from "./hooks/usePagination";
-
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -28,8 +27,8 @@ function App() {
 	const [page, setPage] = React.useState<number>(1);
 	const itemsPerPage: number = 20;
 	const _data = usePagination(data, itemsPerPage); // pagination;
-
 	let isTablet = useMediaQuery(mediaOptions.md);
+
 	const Toast = Swal.mixin({
 		toast: true,
 		position: "bottom-end",
@@ -80,6 +79,7 @@ function App() {
 			return match && str === match?.[0];
 		} catch (error: any) {}
 	}
+
 	async function handleChange(e: any) {
 		switch (e?.target?.name) {
 			case "contractSearch":
@@ -167,6 +167,7 @@ function App() {
 		};
 		sorter();
 	}, [sortVar]);
+
 	// web3
 	React.useEffect(() => {
 		const __ = async () => {

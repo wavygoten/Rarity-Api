@@ -2,27 +2,24 @@ import React from "react";
 import Card from "./Card";
 import SearchTokens from "./SearchTokens";
 import { useCards } from "../hooks/useCards";
-import { usePagination } from "../hooks/usePagination";
 interface Props {
 	data: any;
 	paginationData: any;
 	loading: boolean;
 	searchToken: string;
-	onChange?: React.ChangeEventHandler<HTMLInputElement>;
-	matchExact?: any;
-	isTablet?: any;
-	handleSort?: any;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
+	matchExact: any;
+	isTablet: boolean;
+	handleSort: React.ChangeEventHandler<HTMLSelectElement>;
 	itemsPerPage: number;
-	handleNext?: any;
-	handlePrev?: any;
-	page?: number;
+	handleNext: () => void;
+	handlePrev: () => void;
+	page: number;
 }
 
 const Tabs = (props: Props) => {
 	const ref = React.useRef<any>(null);
 	const width = useCards(ref);
-	const data = [...props.data]; // all data
-
 	const cardsPerRow = props.isTablet
 		? Math.floor(width / 200)
 		: Math.floor(width / 180);
@@ -36,6 +33,7 @@ const Tabs = (props: Props) => {
 			: Math.floor(idx % cardsPerRow) * 180 + "px";
 	const totalHeight = Math.ceil(props.itemsPerPage / cardsPerRow) * 350;
 
+	const data = [...props.data]; // all data
 	return (
 		<div className="tabs-wrapper flex flex-col sm:flex-row justify-between px-2 py-16 whitespace-nowrap">
 			<div className="traits-container flex flex-col shadow-lg rounded-md text-sm mx-2 sm:mr-4 sm:ml-8 mb-4 sm:mb-0 max-h">
