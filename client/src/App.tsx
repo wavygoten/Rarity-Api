@@ -5,6 +5,7 @@ import Stats from "./components/Stats";
 import Tabs from "./components/Tabs";
 import { useMediaQuery, mediaOptions } from "./hooks/useMediaQuery";
 import { usePagination } from "./hooks/usePagination";
+import { useCards } from "./hooks/useCards";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -27,6 +28,7 @@ function App() {
 	const [page, setPage] = React.useState<number>(1);
 	const itemsPerPage: number = 20;
 	const _data = usePagination(data, itemsPerPage); // pagination;
+
 	let isTablet = useMediaQuery(mediaOptions.md);
 
 	const Toast = Swal.mixin({
