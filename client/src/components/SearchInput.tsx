@@ -17,11 +17,11 @@ const Input = (props: Props) => {
         name={props.name}
         onChange={props.onChange}
         autoComplete="off"
-        className="p-2 duration-50 ease-linear w-5/6"
+        className="p-2 duration-50 ease-linear sm:w-5/6 w-3/4"
       />
       <button
         onClick={props.onClick}
-        className="search-btn flex justify-center items-center w-1/6"
+        className="search-btn flex justify-center items-center sm:w-1/6 w-1/4"
       >
         <img src={search} alt="" />
       </button>

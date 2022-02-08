@@ -16,7 +16,7 @@ const Card = (props: Props) => {
       className="card absolute flex flex-col text-md sm:text-lg"
       style={props.style}
     >
-      <img className="" src={props.src} alt="" />
+      <img className="rounded-md" src={props.src} alt="" />
       <div className="card-title ">
         <div>{props.title}</div>{" "}
       </div>
