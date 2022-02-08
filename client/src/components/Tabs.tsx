@@ -53,22 +53,11 @@ const Tabs = (props: Props) => {
         <div className="flex items-center justify-between mb-2">
           <div>{props.data?.length} Items</div>
           {props.data ? (
-            <div className="pagination flex justify-center">
+            <div className="pagination flex justify-center items-center">
               <div className="previous mx-2" onClick={props.handlePrev}>
                 Prev
               </div>
-              <div
-                className="page-number mx-2"
-                style={{
-                  width: "24px",
-                  borderRadius: "6px",
-                  height: "24px",
-                  outline: "none",
-                  textAlign: "center",
-                }}
-              >
-                {props.page}
-              </div>
+              <div className="page-number mx-2">{props.page}</div>
               <div className="next mx-2" onClick={props.handleNext}>
                 Next
               </div>
