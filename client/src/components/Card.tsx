@@ -24,7 +24,7 @@ const Card = (props: Props) => {
       <div className="card-rank flex justify-between text-sm">
         <div>Rank {props.rank}</div>
       </div>
-      <div className="opensea-card text-sm">
+      <div className="opensea-card  text-sm ">
         <a
           href={props.opensea}
           target="_blank"
