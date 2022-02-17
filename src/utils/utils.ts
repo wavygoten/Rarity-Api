@@ -615,7 +615,7 @@ const _ = {
           } else {
             break;
           }
-          await this.sleep(50);
+          await this.sleep(250);
           continue;
         } catch (error: any) {
           console.error(error?.message);
