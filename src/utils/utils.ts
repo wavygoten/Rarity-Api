@@ -299,7 +299,7 @@ const _ = {
 
     const find = await db.findOne("contracts", "contract", contractAddress);
     if (!find?.data?.data) {
-      for (let i = 2900; i < totalSupply.toNumber(); i++) {
+      for (let i = 0; i < totalSupply.toNumber(); i++) {
         try {
           if (tokenURI.includes("ipfs") && tokenURI.includes("json")) {
             const fixtoken = tokenURI
