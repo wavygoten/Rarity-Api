@@ -363,6 +363,26 @@ const _ = {
             } catch (error: any) {
               throw new Error(error?.message);
             }
+          } else if (!tokenURI.includes("ar")) {
+            const othertoken = tokenURI.replace(`1`, `${i}`);
+            console.log(othertoken);
+            try {
+              ethers.utils.fetchJson(othertoken).then(async (res) => {
+                obj = {
+                  contract: contractAddress,
+                  image: res?.image,
+                  name: res?.name,
+                  opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                  tokenid: `${i}`,
+                };
+                returnData.push(obj);
+                data?.data.push(res);
+                data?.attributes.push(res?.attributes);
+                eachAttribute?.push(res?.attributes);
+              });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
           } else {
             break;
           }
@@ -561,6 +581,34 @@ const _ = {
                   data?.data.push(res);
                   data?.attributes.push(res?.attributes);
 
+                  eachAttribute?.push(res?.attributes);
+                });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
+          } else if (
+            !tokenURI.includes("ar") &&
+            !tokenURI.includes("https") &&
+            tokenURI.includes("ipfs")
+          ) {
+            const fixtoken = tokenURI
+              .slice(0, tokenURI.length - 2)
+              .split("//")[1];
+            console.log(fixtoken);
+            try {
+              ethers.utils
+                .fetchJson("https://ipfs.io/ipfs/" + fixtoken + `/${i}`)
+                .then(async (res) => {
+                  obj = {
+                    contract: contractAddress,
+                    image: res?.image,
+                    name: res?.name,
+                    opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                    tokenid: `${i}`,
+                  };
+                  returnData.push(obj);
+                  data?.data.push(res);
+                  data?.attributes.push(res?.attributes);
                   eachAttribute?.push(res?.attributes);
                 });
             } catch (error: any) {
