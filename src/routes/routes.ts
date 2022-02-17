@@ -26,6 +26,35 @@ export class Routes {
     }
   };
 
+  public queryIndex = async (req: Request, res: Response) => {
+    async function checkToken(data: any, token_id: string) {
+      if (data.data) {
+        for (let i = 0; i < data.data.length; i++) {
+          if (token_id === data.data[i].tokenid) {
+            return data.data[i];
+          }
+        }
+      }
+    }
+    if (req.method === "GET") {
+      const contractAddress: string = req?.params?.contractaddress;
+      const token_id: string = req?.params?.tokenid;
+      const postgresData = await this.db.findOne(
+        "contracts",
+        "contract",
+        `${contractAddress}`
+      );
+      const result = await checkToken(postgresData, token_id);
+      if (result) {
+        return res.status(200).json({ success: result });
+      } else {
+        return res.status(400).json({ success: false });
+      }
+    } else {
+      return res.status(400).json({ success: false });
+    }
+  };
+
   /**
    * Fetch user opensea account data.
    * @return {Response} Response when fetched.

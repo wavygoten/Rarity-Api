@@ -43,6 +43,11 @@ export class Server {
   public routes() {
     // -------------- MAIN ROUTES ----------------
     this.app.get("/api/:contractaddress", apiLimiter, this.router.index);
+    this.app.get(
+      "/api/:contractaddress/:tokenid",
+      apiLimiter,
+      this.router.queryIndex
+    );
     this.app.get("/api/", apiLimiter, this.router.account);
     this.app.post(
       "/api/blockchainrescrape",
