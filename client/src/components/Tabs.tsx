@@ -90,7 +90,7 @@ const Tabs = (props: Props) => {
                           src={
                             element?.image?.includes("https")
                               ? element?.image
-                              : `https://${element?.image.replace(
+                              : `https://${element?.image?.replace(
                                   "://",
                                   ".io/ipfs/"
                                 )}`
@@ -121,7 +121,7 @@ const Tabs = (props: Props) => {
                           src={
                             element?.image?.includes("https")
                               ? element?.image
-                              : `https://${element?.image.replace(
+                              : `https://${element?.image?.replace(
                                   "://",
                                   ".io/ipfs/"
                                 )}`
