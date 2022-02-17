@@ -492,34 +492,12 @@ const _ = {
     let obj: any = {};
     let returnData: any[] = [];
     const WEB3_ENDPOINT = "https://cloudflare-eth.com";
-    const getAbi = async () => {
-      const params = new URLSearchParams({
-        module: "contract",
-        action: "getabi",
-        address: contractAddress,
-        apikey: `DXZKJV45JYSX1BTGK6VYN294TWZM7549B9`,
-      });
-
-      return new Promise<object>(async (resolve, reject) => {
-        await fetch(`https://api.etherscan.io/api?${params}`, {
-          method: "GET",
-        })
-          .then((res: any) => res.json())
-          .then((data: any) => {
-            resolve(data);
-          })
-          .catch((err: any) => {
-            reject(err);
-          });
-      });
-    };
-    const abi = await getAbi()
-      .then((res: any) => {
-        return res?.result;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const abi = [
+      "function name() view returns (string memory)",
+      "function totalSupply() view returns (uint256)",
+      "function tokenURI(uint256 _tokenId) view returns (string memory)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+    ];
     const { JsonRpcProvider } = ethers.providers;
     const provider = new JsonRpcProvider(WEB3_ENDPOINT);
     const contract = new ethers.Contract(contractAddress, abi, provider);
