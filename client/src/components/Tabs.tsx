@@ -96,7 +96,7 @@ const Tabs = (props: Props) => {
                                 )}`
                           }
                           title={element?.name}
-                          score={element?.score.toFixed(2)}
+                          score={element?.score?.toFixed(2)}
                           rank={element?.rank}
                           opensea={element?.opensea}
                           style={{
@@ -127,7 +127,7 @@ const Tabs = (props: Props) => {
                                 )}`
                           }
                           title={element?.name}
-                          score={element?.score.toFixed(2)}
+                          score={element?.score?.toFixed(2)}
                           rank={element?.rank}
                           opensea={element?.opensea}
                           style={
