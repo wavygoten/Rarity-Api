@@ -87,7 +87,14 @@ const Tabs = (props: Props) => {
                     if (idx < props.itemsPerPage) {
                       return (
                         <Card
-                          src={element?.image}
+                          src={
+                            element?.image.includes("https")
+                              ? element?.image
+                              : `https://${element?.image.replace(
+                                  "://",
+                                  ".io/ipfs/"
+                                )}`
+                          }
                           title={element?.name}
                           score={element?.score.toFixed(2)}
                           rank={element?.rank}
@@ -111,7 +118,14 @@ const Tabs = (props: Props) => {
                     ) {
                       return (
                         <Card
-                          src={element?.image}
+                          src={
+                            element?.image.includes("https")
+                              ? element?.image
+                              : `https://${element?.image.replace(
+                                  "://",
+                                  ".io/ipfs/"
+                                )}`
+                          }
                           title={element?.name}
                           score={element?.score.toFixed(2)}
                           rank={element?.rank}

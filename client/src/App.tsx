@@ -99,7 +99,8 @@ function App() {
       setLoading(true);
       await axios({
         method: "POST",
-        url: "https://traitsurfer.app/api/stats", // production
+        // url: "https://traitsurfer.app/api/stats", // production
+        url: "http://localhost:9785/api/stats",
         data: {
           contractAddress: searchContract,
         },
@@ -117,12 +118,14 @@ function App() {
         });
       await axios({
         method: "GET",
-        url: `https://traitsurfer.app/api/${searchContract}`, // production
+        // url: `https://traitsurfer.app/api/${searchContract}`, // production
+        url: `http://localhost:9785/api/${searchContract}`,
       })
         .then((res: any) => {
           setLoading(false);
           if (res?.data?.success?.data) {
             console.log("Contract data fetched");
+            console.log(res?.data?.success?.data);
             setData(res?.data?.success?.data);
             Toast.fire({
               icon: "success",

@@ -247,15 +247,14 @@ const _ = {
 
   async fetchBlockchainAssets(contractAddress: string) {
     let data: any = {
-      names: [],
       data: [],
       attributes: [],
-      image: [],
       score: [],
       rank: [],
     };
     let eachAttribute: any = [];
-
+    let obj: any = {};
+    let returnData: any[] = [];
     const WEB3_ENDPOINT = "https://cloudflare-eth.com";
     const getAbi = async () => {
       const params = new URLSearchParams({
@@ -300,47 +299,79 @@ const _ = {
 
     const find = await db.findOne("contracts", "contract", contractAddress);
     if (!find?.data?.data) {
-      for (let i = 6869; i < totalSupply.toNumber(); i++) {
+      for (let i = 2900; i < totalSupply.toNumber(); i++) {
         try {
           if (tokenURI.includes("ipfs") && tokenURI.includes("json")) {
             const fixtoken = tokenURI
               .slice(0, tokenURI.length - 6)
               .split("//")[1];
             console.log(fixtoken);
-            ethers.utils
-              .fetchJson("https://ipfs.io/ipfs/" + fixtoken + `${i}.json`)
-              .then(async (res: any) => {
-                data?.names.push(name);
-                data?.data.push(res);
-                data?.attributes.push(res?.attributes);
-
-                eachAttribute?.push(res?.attributes);
-              });
-          } else if (tokenURI.includes("ipfs") && !tokenURI.includes("json")) {
+            try {
+              ethers.utils
+                .fetchJson("https://ipfs.io/ipfs/" + fixtoken + `${i}.json`)
+                .then(async (res: any) => {
+                  obj = {
+                    contract: contractAddress,
+                    image: res?.image,
+                    name: res?.name,
+                    opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                    tokenid: `${i}`,
+                  };
+                  returnData.push(obj);
+                  data?.data.push(res);
+                  data?.attributes.push(res?.attributes);
+                  eachAttribute?.push(res?.attributes);
+                });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
+          } else if (tokenURI.includes("mypinata.cloud")) {
             const fixtoken = tokenURI
               .slice(0, tokenURI.length - 2)
               .split("//")[1];
             console.log(fixtoken);
-            ethers.utils
-              .fetchJson("https://ipfs.io" + fixtoken + `/${i}`)
-              .then(async (res: any) => {
-                data?.names.push(name);
-                data?.data.push(res);
-                data?.attributes.push(res?.attributes);
+            try {
+              ethers.utils
+                .fetchJson("https://" + fixtoken + `/${i}`)
+                .then(async (res: any) => {
+                  obj = {
+                    contract: contractAddress,
+                    image: res?.image,
+                    name: res?.name,
+                    opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                    tokenid: `${i}`,
+                  };
+                  returnData.push(obj);
+                  data?.data.push(res);
+                  data?.attributes.push(res?.attributes);
 
-                eachAttribute?.push(res?.attributes);
-              });
-          } else {
+                  eachAttribute?.push(res?.attributes);
+                });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
+          } else if (!tokenURI.includes("ar")) {
             const othertoken = tokenURI.replace(`1`, `${i}`);
             console.log(othertoken);
-            ethers.utils.fetchJson(othertoken).then(async (res) => {
-              // console.log(res);
-              data?.names.push(name);
-              data?.data.push(res);
-              data?.attributes.push(res?.attributes);
-              eachAttribute?.push(res?.attributes);
-              // data.contractNames.push(res?.name);
-            });
+            try {
+              ethers.utils.fetchJson(othertoken).then(async (res) => {
+                obj = {
+                  contract: contractAddress,
+                  image: res?.image,
+                  name: res?.name,
+                  opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                  tokenid: `${i}`,
+                };
+                returnData.push(obj);
+                data?.data.push(res);
+                data?.attributes.push(res?.attributes);
+                eachAttribute?.push(res?.attributes);
+              });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
+          } else {
+            break;
           }
           await this.sleep(250);
           continue;
@@ -352,10 +383,19 @@ const _ = {
       data.score = await checkRarity(eachAttribute, data);
       data.rank = this.rank(data.score);
     } else {
-      return data;
+      return returnData;
     }
-
-    return data;
+    returnData.forEach((element: any, idx: number) => {
+      element.traits = data.attributes[idx];
+    });
+    returnData.forEach((element: any, idx: number) => {
+      element.score = data.score[idx];
+    });
+    returnData.forEach((element: any, idx: number) => {
+      element.rank = data.rank[idx];
+    });
+    returnData.push(obj);
+    return returnData;
 
     async function checkRarity(attributes: any, data: number) {
       let totalValueCount: number = 0;

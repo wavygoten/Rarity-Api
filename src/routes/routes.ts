@@ -74,7 +74,7 @@ export class Routes {
     if (req.method === "POST") {
       const { contractAddress } = req.body;
       const data = await utils.fetchBlockchainAssets(contractAddress);
-      if (data.names.length > 0) {
+      if (data.length > 0) {
         await this.db.insert("contracts", contractAddress, data);
       } else {
         return res.status(201).json({ success: false });
