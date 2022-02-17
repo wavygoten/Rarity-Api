@@ -88,7 +88,7 @@ const Tabs = (props: Props) => {
                       return (
                         <Card
                           src={
-                            element?.image.includes("https")
+                            element?.image?.includes("https")
                               ? element?.image
                               : `https://${element?.image.replace(
                                   "://",
