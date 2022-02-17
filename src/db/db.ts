@@ -80,6 +80,21 @@ export class DB {
   }
 
   /**
+   * Update a row of data within specified table.
+   */
+  async updateData(tableName: string, contract: string, data: any) {
+    await this.pool
+      .query(
+        `UPDATE ${tableName} SET data = '${JSON.stringify(
+          data
+        )}'::json WHERE contract ILIKE '${contract}'`
+      )
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  /**
    * Delete all data within table.
    */
   async deleteData(tableName: string) {

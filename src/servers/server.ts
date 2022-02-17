@@ -44,6 +44,11 @@ export class Server {
     // -------------- MAIN ROUTES ----------------
     this.app.get("/api/:contractaddress", apiLimiter, this.router.index);
     this.app.get("/api/", apiLimiter, this.router.account);
+    this.app.post(
+      "/api/blockchainrescrape",
+      apiLimiter,
+      this.router.rescrapeBlock
+    );
     this.app.post("/api/blockchainscrape", apiLimiter, this.router.blockScrape);
     this.app.post("/api/contractaddress", apiLimiter, this.router.scrape);
     this.app.post("/api/stats", apiLimiter, this.router.stats);

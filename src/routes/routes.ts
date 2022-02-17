@@ -84,6 +84,21 @@ export class Routes {
       return res.status(400).json({ success: false });
     }
   };
+
+  public rescrapeBlock = async (req: Request, res: Response) => {
+    if (req.method === "POST") {
+      const { contractAddress } = req.body;
+      const data = await utils.rescrapeBlockchainAssets(contractAddress);
+      if (data.length > 0) {
+        await this.db.updateData("contracts", contractAddress, data);
+      } else {
+        return res.status(201).json({ success: false });
+      }
+      return res.status(200).json({ success: true });
+    } else {
+      return res.status(400).json({ success: false });
+    }
+  };
   /**
    * Retrieves opensea stats based on the collection address.
    * @return {Response} Response when finished.

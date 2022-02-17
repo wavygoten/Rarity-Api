@@ -245,6 +245,10 @@ const _ = {
     return result;
   },
 
+  /**
+   * Fetch blockchain erc assets to end.
+   * @return {Promise} Postgres import data in JSON.
+   */
   async fetchBlockchainAssets(contractAddress: string) {
     let data: any = {
       data: [],
@@ -299,7 +303,241 @@ const _ = {
 
     const find = await db.findOne("contracts", "contract", contractAddress);
     if (!find?.data?.data) {
-      for (let i = 0; i < totalSupply.toNumber(); i++) {
+      for (let i = 1; i <= totalSupply.toNumber(); i++) {
+        try {
+          if (
+            tokenURI.includes("ipfs") &&
+            tokenURI.includes("json") &&
+            !tokenURI.includes("https")
+          ) {
+            const fixtoken = tokenURI
+              .slice(0, tokenURI.length - 6)
+              .split("//")[1];
+            console.log(fixtoken);
+            try {
+              ethers.utils
+                .fetchJson("https://ipfs.io/ipfs/" + fixtoken + `${i}.json`)
+                .then(async (res: any) => {
+                  obj = {
+                    contract: contractAddress,
+                    image: res?.image,
+                    name: res?.name,
+                    opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                    tokenid: `${i}`,
+                  };
+                  returnData.push(obj);
+                  data?.data.push(res);
+                  data?.attributes.push(res?.attributes);
+                  eachAttribute?.push(res?.attributes);
+                });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
+          } else if (tokenURI.includes("mypinata.cloud")) {
+            const fixtoken =
+              tokenURI.slice(0, tokenURI.length - 2).split("//")[1] + `/${i}`;
+            console.log(fixtoken);
+            try {
+              ethers.utils
+                .fetchJson("https://" + fixtoken)
+                .then(async (res: any) => {
+                  obj = {
+                    contract: contractAddress,
+                    image: res?.image,
+                    name: res?.name,
+                    opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                    tokenid: `${i}`,
+                  };
+                  returnData.push(obj);
+                  data?.data.push(res);
+                  data?.attributes.push(res?.attributes);
+
+                  eachAttribute?.push(res?.attributes);
+                });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
+          } else if (
+            !tokenURI.includes("ar") &&
+            !tokenURI.includes("https") &&
+            tokenURI.includes("ipfs")
+          ) {
+            const fixtoken = tokenURI
+              .slice(0, tokenURI.length - 2)
+              .split("//")[1];
+            console.log(fixtoken);
+            try {
+              ethers.utils
+                .fetchJson("https://ipfs.io/ipfs/" + fixtoken + `/${i}`)
+                .then(async (res) => {
+                  obj = {
+                    contract: contractAddress,
+                    image: res?.image,
+                    name: res?.name,
+                    opensea: `https://opensea.io/assets/${contractAddress}/${i}`,
+                    tokenid: `${i}`,
+                  };
+                  returnData.push(obj);
+                  data?.data.push(res);
+                  data?.attributes.push(res?.attributes);
+                  eachAttribute?.push(res?.attributes);
+                });
+            } catch (error: any) {
+              throw new Error(error?.message);
+            }
+          } else {
+            break;
+          }
+          await this.sleep(50);
+          continue;
+        } catch (error: any) {
+          console.error(error?.message);
+          break;
+        }
+      }
+      data.score = await checkRarity(eachAttribute, data);
+      data.rank = this.rank(data.score);
+    } else {
+      // rescrape and update ?
+      return returnData;
+    }
+    returnData.forEach((element: any, idx: number) => {
+      element.traits = data.attributes[idx];
+    });
+    returnData.forEach((element: any, idx: number) => {
+      element.score = data.score[idx];
+    });
+    returnData.forEach((element: any, idx: number) => {
+      element.rank = data.rank[idx];
+    });
+    returnData.push(obj);
+    return returnData;
+
+    async function checkRarity(attributes: any, data: number) {
+      let totalValueCount: number = 0;
+      let returnValue: any = [];
+      let groupedValues: any = [];
+      let values: any = [];
+
+      attributes.map((element: any) => {
+        element.map((element: any) => {
+          values.push(element?.value);
+        });
+      });
+
+      totalValueCount = values.length;
+      // group all elements in individual groups
+
+      values.sort().reduce((r: any, current_item: any) => {
+        if (current_item !== r) {
+          groupedValues.push([]);
+        }
+        groupedValues[groupedValues.length - 1].push(current_item);
+        return current_item;
+      }, undefined);
+
+      for (let i: number = 0; i < groupedValues.length; i++) {
+        let calc: number = parseFloat(
+          (1 / (groupedValues[i].length / attributes.length)).toFixed(2)
+        );
+        returnValue.push({ valueName: groupedValues[i], calculation: calc });
+      }
+
+      const raritySort = async (attributes: any, data: any) => {
+        let tempArr: any = [];
+        let eachTotal: number[] = [];
+        attributes.map((element: any, idx: number) => {
+          tempArr.push({
+            name: element?.valueName[0],
+            calc: element?.calculation,
+          });
+        });
+
+        data?.attributes.map((element: any, idx: number) => {
+          for (let item in element) {
+            tempArr.filter((e: any) => {
+              if (e?.name === element[item]?.value) {
+                element[item].ranking = e?.calc;
+              }
+            });
+          }
+        });
+
+        data?.attributes.map((element: any, idx: number) => {
+          let total: number = 0;
+          for (let item in element) {
+            total += element[item]?.ranking;
+          }
+          eachTotal.push(parseFloat(total.toFixed(2)));
+        });
+
+        return eachTotal;
+      };
+      const returnVal = await raritySort(returnValue, data);
+
+      return returnVal;
+    }
+  },
+
+  /**
+   * Rescrape blockchain erc assets to end.
+   * @return {Promise} Postgres update data in JSON.
+   */
+  async rescrapeBlockchainAssets(contractAddress: string) {
+    let data: any = {
+      data: [],
+      attributes: [],
+      score: [],
+      rank: [],
+    };
+    let eachAttribute: any = [];
+    let obj: any = {};
+    let returnData: any[] = [];
+    const WEB3_ENDPOINT = "https://cloudflare-eth.com";
+    const getAbi = async () => {
+      const params = new URLSearchParams({
+        module: "contract",
+        action: "getabi",
+        address: contractAddress,
+        apikey: `DXZKJV45JYSX1BTGK6VYN294TWZM7549B9`,
+      });
+
+      return new Promise<object>(async (resolve, reject) => {
+        await fetch(`https://api.etherscan.io/api?${params}`, {
+          method: "GET",
+        })
+          .then((res: any) => res.json())
+          .then((data: any) => {
+            resolve(data);
+          })
+          .catch((err: any) => {
+            reject(err);
+          });
+      });
+    };
+    const abi = await getAbi()
+      .then((res: any) => {
+        return res?.result;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    const { JsonRpcProvider } = ethers.providers;
+    const provider = new JsonRpcProvider(WEB3_ENDPOINT);
+    const contract = new ethers.Contract(contractAddress, abi, provider);
+    const handleError = () => {
+      return undefined;
+    };
+    let [name, totalSupply, tokenURI, all] = await Promise.all([
+      contract.name().catch(handleError),
+      contract.totalSupply().catch(handleError),
+      contract.tokenURI(1).catch(handleError),
+      contract,
+    ]);
+
+    const find = await db.findOne("contracts", "contract", contractAddress);
+    if (!find?.data?.data?.success) {
+      for (let i = 1; i <= totalSupply.toNumber(); i++) {
         try {
           if (tokenURI.includes("ipfs") && tokenURI.includes("json")) {
             const fixtoken = tokenURI
@@ -462,6 +700,7 @@ const _ = {
       return returnVal;
     }
   },
+
   /**
    * Rarity function to calculate rarity scores
    * @return {Promise} Rarity data in JSON.
