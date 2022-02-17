@@ -260,34 +260,12 @@ const _ = {
     let obj: any = {};
     let returnData: any[] = [];
     const WEB3_ENDPOINT = "https://cloudflare-eth.com";
-    const getAbi = async () => {
-      const params = new URLSearchParams({
-        module: "contract",
-        action: "getabi",
-        address: contractAddress,
-        apikey: `DXZKJV45JYSX1BTGK6VYN294TWZM7549B9`,
-      });
-
-      return new Promise<object>(async (resolve, reject) => {
-        await fetch(`https://api.etherscan.io/api?${params}`, {
-          method: "GET",
-        })
-          .then((res: any) => res.json())
-          .then((data: any) => {
-            resolve(data);
-          })
-          .catch((err: any) => {
-            reject(err);
-          });
-      });
-    };
-    const abi = await getAbi()
-      .then((res: any) => {
-        return res?.result;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const abi = [
+      "function name() view returns (string memory)",
+      "function totalSupply() view returns (uint256)",
+      "function tokenURI(uint256 _tokenId) view returns (string memory)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+    ];
     const { JsonRpcProvider } = ethers.providers;
     const provider = new JsonRpcProvider(WEB3_ENDPOINT);
     const contract = new ethers.Contract(contractAddress, abi, provider);
@@ -303,7 +281,7 @@ const _ = {
 
     const find = await db.findOne("contracts", "contract", contractAddress);
     if (!find?.data?.data) {
-      for (let i = 1; i <= totalSupply.toNumber(); i++) {
+      for (let i = 1; i < totalSupply.toNumber(); i++) {
         try {
           if (
             tokenURI.includes("ipfs") &&
@@ -537,7 +515,7 @@ const _ = {
 
     const find = await db.findOne("contracts", "contract", contractAddress);
     if (!find?.data?.data?.success) {
-      for (let i = 1; i <= totalSupply.toNumber(); i++) {
+      for (let i = 1; i < totalSupply.toNumber(); i++) {
         try {
           if (tokenURI.includes("ipfs") && tokenURI.includes("json")) {
             const fixtoken = tokenURI
