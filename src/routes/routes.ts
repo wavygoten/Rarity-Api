@@ -29,10 +29,11 @@ export class Routes {
   public queryIndex = async (req: Request, res: Response) => {
     async function checkToken(data: any, token_id: string) {
       if (data.data) {
-        for (let i = 0; i < data.data.length; i++) {
-          if (token_id === data.data[i].tokenid) {
-            return data.data[i];
-          }
+        const index = data.data.findIndex(
+          (element: any) => element.tokenid === token_id
+        );
+        if (index !== -1) {
+          return data.data[index];
         }
       }
     }
