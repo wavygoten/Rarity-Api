@@ -266,8 +266,8 @@ const _ = {
       "function tokenURI(uint256 _tokenId) view returns (string memory)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
     ];
-    const { JsonRpcProvider } = ethers.providers;
-    const provider = new JsonRpcProvider(WEB3_ENDPOINT);
+    const { WebSocketProvider } = ethers.providers;
+    const provider = new WebSocketProvider(WEB3_ENDPOINT);
     const contract = new ethers.Contract(contractAddress, abi, provider);
     const handleError = () => {
       return undefined;
@@ -491,15 +491,15 @@ const _ = {
     let eachAttribute: any = [];
     let obj: any = {};
     let returnData: any[] = [];
-    const WEB3_ENDPOINT = "https://cloudflare-eth.com";
+    const WEB3_ENDPOINT = "wss://api.zmok.io/mainnet/srr9jzs6wdrgdlby";
     const abi = [
       "function name() view returns (string memory)",
       "function totalSupply() view returns (uint256)",
       "function tokenURI(uint256 _tokenId) view returns (string memory)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
     ];
-    const { JsonRpcProvider } = ethers.providers;
-    const provider = new JsonRpcProvider(WEB3_ENDPOINT);
+    const { WebSocketProvider } = ethers.providers;
+    const provider = new WebSocketProvider(WEB3_ENDPOINT);
     const contract = new ethers.Contract(contractAddress, abi, provider);
     const handleError = () => {
       return undefined;
