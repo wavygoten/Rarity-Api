@@ -259,7 +259,7 @@ const _ = {
     let eachAttribute: any = [];
     let obj: any = {};
     let returnData: any[] = [];
-    const WEB3_ENDPOINT = "https://cloudflare-eth.com";
+    const WEB3_ENDPOINT = "wss://api.zmok.io/mainnet/srr9jzs6wdrgdlby";
     const abi = [
       "function name() view returns (string memory)",
       "function totalSupply() view returns (uint256)",
