@@ -389,6 +389,8 @@ const _ = {
                   } else {
                     image = res?.image.replace("mypinata.cloud", "ipfs.io");
                   }
+                } else {
+                  image = res?.image;
                 }
                 obj = {
                   contract: contractAddress,
@@ -640,6 +642,8 @@ const _ = {
                   } else {
                     image = res?.image.replace("mypinata.cloud", "ipfs.io");
                   }
+                } else {
+                  image = res?.image;
                 }
                 obj = {
                   contract: contractAddress,
