@@ -89,11 +89,7 @@ const Tabs = (props: Props) => {
                         <Card
                           src={
                             element?.image?.includes("https")
-                              ? "https://" +
-                                element?.image?.substring(
-                                  element?.image?.indexOf("ipfs"),
-                                  element?.image?.length
-                                )
+                              ? element?.image?.replace("rcc.", "")
                               : `https://${element?.image?.replace(
                                   "://",
                                   ".io/ipfs/"
@@ -124,11 +120,7 @@ const Tabs = (props: Props) => {
                         <Card
                           src={
                             element?.image?.includes("https")
-                              ? "https://" +
-                                element?.image?.substring(
-                                  element?.image?.indexOf("ipfs"),
-                                  element?.image?.length
-                                )
+                              ? element?.image?.replace("rcc.", "")
                               : `https://${element?.image?.replace(
                                   "://",
                                   ".io/ipfs/"
