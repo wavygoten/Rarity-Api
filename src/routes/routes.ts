@@ -26,6 +26,10 @@ export class Routes {
     }
   };
 
+  /**
+   * Fetch specific query data from route "/:address"
+   * @return {Response} Response when fetching specific data using url and token id query.
+   */
   public queryIndex = async (req: Request, res: Response) => {
     if (req.method === "GET") {
       const contractAddress: string = req?.params?.contractaddress;

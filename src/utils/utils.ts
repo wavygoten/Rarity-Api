@@ -785,6 +785,7 @@ const _ = {
         return data.data[index];
       }
     }
+    return 0;
   },
 
   /**
