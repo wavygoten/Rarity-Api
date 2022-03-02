@@ -776,6 +776,16 @@ const _ = {
     }
     return arr;
   },
+  async checkToken(data: any, token_id: string) {
+    if (data.data) {
+      const index = data.data.findIndex(
+        (element: any) => element.tokenid === token_id
+      );
+      if (index !== -1) {
+        return data.data[index];
+      }
+    }
+  },
 
   /**
    * Ranking function to help sort data based on rarity score

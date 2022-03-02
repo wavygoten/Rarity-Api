@@ -125,6 +125,24 @@ export class DB {
     });
   }
 
+  // async findQuery(value?: any) {
+  //   let data: any;
+  //   await this.pool
+  //     .query(
+  //       `SELECT * FROM contracts WHERE contract ILIKE '${value}' tokenid = 7700`
+  //     )
+  //     .then((res) => {
+  //       if (!res.rows[0]) {
+  //         data = { success: false };
+  //       } else {
+  //         data = res.rows[0];
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  //   return data;
+  // }
   /**
    * Finds a contract based on its value, NOT case-sensitive
    * @return {Promise} Data found in PostgreSQL

@@ -27,16 +27,6 @@ export class Routes {
   };
 
   public queryIndex = async (req: Request, res: Response) => {
-    async function checkToken(data: any, token_id: string) {
-      if (data.data) {
-        const index = data.data.findIndex(
-          (element: any) => element.tokenid === token_id
-        );
-        if (index !== -1) {
-          return data.data[index];
-        }
-      }
-    }
     if (req.method === "GET") {
       const contractAddress: string = req?.params?.contractaddress;
       const token_id: string = req?.params?.tokenid;
@@ -45,7 +35,7 @@ export class Routes {
         "contract",
         `${contractAddress}`
       );
-      const result = await checkToken(postgresData, token_id);
+      const result = await utils.checkToken(postgresData, token_id);
       if (result) {
         return res.status(200).json({ success: result });
       } else {
