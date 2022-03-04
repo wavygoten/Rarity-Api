@@ -136,12 +136,16 @@ export class DB {
 	async findQuery(contract: any, token: any) {
 		let data: any;
 		await this.pool
-			.query(`SELECT * FROM contracts WHERE contract ILIKE '${contract}'`)
+			.query(
+				`SELECT data FROM contracts WHERE   data @> '[{"contract" : "${contract}"}]' AND data @> '[{"tokenid": "${token}"}]' `
+			)
 			.then(async (res) => {
 				if (!res.rows[0]) {
 					data = { success: false };
 				} else {
 					data = res.rows[0];
+					console.log(res.rows[0]);
+					console.log(res);
 				}
 			})
 			.catch((err) => {
