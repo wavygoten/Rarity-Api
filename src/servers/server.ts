@@ -51,6 +51,7 @@ export class Server {
 		);
 		this.app.post("/api/blockchainscrape", apiLimiter, this.router.blockScrape);
 		this.app.post("/api/contractaddress", apiLimiter, this.router.scrape);
+		this.app.post("/api/recontractaddress", apiLimiter, this.router.reScrape);
 		this.app.post("/api/stats", apiLimiter, this.router.stats);
 		this.app.post("/api/deleteOne", this.router.deleteOne);
 		// -------------------------------------------
