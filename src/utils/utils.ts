@@ -168,8 +168,99 @@ const _ = {
 		let error: boolean = false;
 		const scores: any = [];
 		let ranked: any = [];
+		const find = await db.findOne("contracts", "contract", contract);
 
-		if (data.contract.indexOf(contract) === -1) {
+		if (!find?.data?.data) {
+			for (let i = 0; i < supply; i += 30) {
+				const params = new URLSearchParams();
+				for (let j = i; j < i + 30; j++) {
+					params.append("token_ids", `${j}`);
+				}
+				params.append("asset_contract_address", contract);
+				params.append("order_direction", "asc");
+				params.append("offset", "0");
+				params.append("limit", "30");
+				await fetch(`https://api.opensea.io/api/v1/assets?${params}`, {
+					method: "GET",
+					headers: {
+						Accept: "application/json",
+						"X-API-KEY": apiKey,
+					},
+				})
+					.then((res: any) => res.json())
+					.then((res: any) => {
+						for (let item in res?.assets) {
+							let score: number = 0;
+							const scores: any = [];
+
+							// calculate rarity score and match
+							for (
+								let i: number = 0;
+								i < res?.assets[item]?.traits.length;
+								i++
+							) {
+								for (let j: number = 0; j < traitRarities.length; j++) {
+									if (
+										res?.assets[item]?.traits[i]?.value.toLowerCase() ===
+										traitRarities[j]?.name.toLowerCase()
+									) {
+										score += traitRarities[j]?.calculation;
+									}
+								}
+							}
+							result.push({
+								name: res?.assets[item]?.name,
+								tokenid: res?.assets[item]?.token_id,
+								contract: contract,
+								traits: res?.assets[item]?.traits,
+								opensea: res?.assets[item]?.permalink,
+								image: res?.assets[item]?.image_url,
+								score: score,
+							});
+						}
+					})
+					.catch((err: any) => {
+						console.log(err);
+						error = true;
+					});
+
+				if (error) {
+					break;
+				}
+				await this.sleep(5000);
+			}
+		} else {
+			return [];
+		}
+
+		// --------- Ranking Function -----------
+		result.forEach((element: any) => {
+			scores.push(element?.score);
+		});
+		ranked = this.rank(scores);
+		result.map((element: any, idx: number) => {
+			element.rank = ranked[idx];
+		});
+		// --------- Ranking Function -----------
+
+		return result;
+	},
+
+	/**
+	 * Refetch multiple opensea assets (30) to end.
+	 * @return {Promise} Postgres import data in JSON.
+	 */
+	async reFetchMultipleAssets(
+		contract: string,
+		supply: number,
+		traitRarities: any
+	) {
+		let result: any = [];
+		let error: boolean = false;
+		const scores: any = [];
+		let ranked: any = [];
+		const find = await db.findOne("contracts", "contract", contract);
+		if (!find?.data?.data?.success) {
 			for (let i = 0; i < supply; i += 30) {
 				const params = new URLSearchParams();
 				for (let j = i; j < i + 30; j++) {

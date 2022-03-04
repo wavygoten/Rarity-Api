@@ -125,6 +125,14 @@ export class DB {
 		});
 	}
 
+	async deleteOne(contract: string) {
+		await this.pool
+			.query(`DELETE FROM contracts WHERE contract ILIKE '${contract}'`)
+			.catch((err) => {
+				console.error(err);
+			});
+	}
+
 	async findQuery(contract: any, token: any) {
 		let data: any;
 		await this.pool

@@ -139,6 +139,22 @@ export class Routes {
 		}
 	};
 
+	public deleteOne = async (req: Request, res: Response) => {
+		if (req.method === "POST") {
+			const { contractAddress } = req.body;
+			await this.db
+				.deleteOne(contractAddress)
+				.then(() => {
+					return res.status(200).json({ success: true });
+				})
+				.catch(() => {
+					return res.status(400).json({ success: false });
+				});
+		} else {
+			return res.status(400).json({ success: false });
+		}
+	};
+
 	/**
 	 * Deletes a new table called contracts.
 	 * @return {Response} Response when finished.
