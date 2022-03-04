@@ -91,7 +91,7 @@ const Tabs = (props: Props) => {
 														element?.image?.includes("https")
 															? element?.image
 																	?.replace("rcc.", "")
-																	?.replace("kaijukingz", "")
+																	?.replace("kaijukingz.", "")
 															: `https://${element?.image?.replace(
 																	"://",
 																	".io/ipfs/"
@@ -124,7 +124,7 @@ const Tabs = (props: Props) => {
 														element?.image?.includes("https")
 															? element?.image
 																	?.replace("rcc.", "")
-																	?.replace("kaijukingz", "")
+																	?.replace("kaijukingz.", "")
 															: `https://${element?.image?.replace(
 																	"://",
 																	".io/ipfs/"
