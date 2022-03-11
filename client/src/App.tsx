@@ -30,9 +30,9 @@ function App() {
   const handleRequest = async (method: string, data: any, apiUrl: string) => {
     switch (method) {
       case "GET":
-        const dataResponse = await axios.get(`${apiUrl}/${data}`);
-        setLoading(false);
         try {
+          const dataResponse = await axios.get(`${apiUrl}/${data}`);
+          setLoading(false);
           if (dataResponse?.data?.success?.data) {
             Toast.fire({
               icon: "success",
@@ -53,8 +53,8 @@ function App() {
         }
         break;
       case "POST":
-        const statsResponse = await axios.post(apiUrl, data);
         try {
+          const statsResponse = await axios.post(apiUrl, data);
           if (statsResponse?.data?.success?.collection?.name !== "undefined") {
             setStats(statsResponse?.data?.success?.collection);
           } else {
