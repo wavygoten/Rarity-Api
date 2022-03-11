@@ -7,10 +7,10 @@ interface Props {
   rank: string;
   opensea: string;
   details?: any;
-  style?: React.CSSProperties;
+  style: React.CSSProperties;
 }
 
-const Card = (props: Props) => {
+export const Card = (props: Props) => {
   return (
     <div
       className="card absolute flex flex-col text-md sm:text-lg"
@@ -47,5 +47,3 @@ const Card = (props: Props) => {
     </div>
   );
 };
-
-export default Card;

@@ -6,9 +6,10 @@ interface Props {
   name?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  loading: boolean;
 }
 
-const Input = (props: Props) => {
+export const Input = (props: Props) => {
   return (
     <div className="search-container flex mx-auto justify-center rounded-md">
       <input
@@ -23,10 +24,17 @@ const Input = (props: Props) => {
         onClick={props.onClick}
         className="search-btn flex justify-center items-center sm:w-1/6 w-1/4"
       >
-        <img src={search} alt="" />
+        {props.loading ? (
+          <div
+            className="spinner-border animate-spin  w-4 h-4 border-2 rounded-full"
+            role="status"
+          >
+            <span className="visually-hidden"></span>
+          </div>
+        ) : (
+          <img src={search} alt="" />
+        )}
       </button>
     </div>
   );
 };
-
-export default Input;

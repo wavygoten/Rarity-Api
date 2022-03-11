@@ -1,11 +1,8 @@
 import React from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Stats from "./components/Stats";
-import Tabs from "./components/Tabs";
-import { useMediaQuery, mediaOptions } from "./hooks/useMediaQuery";
-import { usePagination } from "./hooks/usePagination";
-import axios from "axios";
+import { Navbar, Stats, Tabs } from "./components";
+import { useMediaQuery, mediaOptions, usePagination } from "./hooks";
+import axios from "./utils/axios";
 import Swal from "sweetalert2";
 
 declare global {
@@ -30,6 +27,56 @@ function App() {
 
   let isTablet = useMediaQuery(mediaOptions.md);
 
+  const handleRequest = async (method: string, data: any, apiUrl: string) => {
+    switch (method) {
+      case "GET":
+        const dataResponse = await axios.get(`${apiUrl}/${data}`);
+        setLoading(false);
+        try {
+          if (dataResponse?.data?.success?.data) {
+            Toast.fire({
+              icon: "success",
+              titleText: "Contract data fetched",
+              width: "20rem",
+            });
+            return setData(dataResponse?.data?.success?.data);
+          } else {
+            Toast.fire({
+              icon: "error",
+              titleText: "Contract data doesn't exist",
+              width: "22rem",
+            });
+            return setData([]);
+          }
+        } catch (error: any) {
+          console.error(error.message);
+        }
+        break;
+      case "POST":
+        const statsResponse = await axios.post(apiUrl, data);
+        try {
+          if (statsResponse?.data?.success?.collection?.name !== "undefined") {
+            setStats(statsResponse?.data?.success?.collection);
+          } else {
+            setStats([]);
+          }
+        } catch (error: any) {
+          if (error?.response?.status === 429) {
+            Toast.fire({
+              icon: "error",
+              titleText: "Please wait a few minutes before searching.",
+              width: "26rem",
+            });
+            setLoading(false);
+          }
+          console.error(error.message);
+        }
+        break;
+      default:
+        break;
+    }
+    return;
+  };
   const Toast = Swal.mixin({
     toast: true,
     position: "bottom-end",
@@ -97,54 +144,16 @@ function App() {
   async function contractSearchClick() {
     if (searchContract.length > 0) {
       setLoading(true);
-      await axios({
-        method: "POST",
-        url: "https://traitsurfer.app/api/stats", // production
-        // url: "http://localhost:9785/api/stats",
-        data: {
+      setData([]);
+      const statistics: void = await handleRequest(
+        "POST",
+        {
           contractAddress: searchContract,
         },
-      })
-        .then((res: any) => {
-          if (res?.data?.success?.collection?.name !== "undefined") {
-            setStats(res?.data?.success?.collection);
-          } else {
-            console.log("No collection found with stats");
-            setStats([]);
-          }
-        })
-        .catch((err: any) => {
-          console.error(err);
-        });
-      await axios({
-        method: "GET",
-        url: `https://traitsurfer.app/api/${searchContract}`, // production
-        // url: `http://localhost:9785/api/${searchContract}`,
-      })
-        .then((res: any) => {
-          setLoading(false);
-          if (res?.data?.success?.data) {
-            console.log("Contract data fetched");
-            console.log(res?.data?.success?.data);
-            setData(res?.data?.success?.data);
-            Toast.fire({
-              icon: "success",
-              titleText: "Contract data fetched",
-              width: "20rem",
-            });
-          } else {
-            console.log("Contract data doesn't exist");
-            setData([]);
-            Toast.fire({
-              icon: "error",
-              titleText: "Contract data doesn't exist",
-              width: "22rem",
-            });
-          }
-        })
-        .catch((err: any) => {
-          console.error(err);
-        });
+        "/stats"
+      );
+      const allData: void = await handleRequest("GET", searchContract, "");
+      Promise.all([statistics, allData]);
     } else {
       Toast.fire({
         icon: "error",
@@ -191,6 +200,7 @@ function App() {
         onClick={contractSearchClick}
         onMetaMaskClick={metamaskClick}
         statusMsg={status}
+        loading={loading}
       />
       {/* End of Navbar Section */}
 
@@ -205,7 +215,6 @@ function App() {
       <Tabs
         data={data}
         paginationData={_data}
-        loading={loading}
         searchToken={searchToken}
         onChange={handleChange}
         matchExact={matchExact}
@@ -227,11 +236,22 @@ function App() {
           const accounts = await window.ethereum.request({
             method: "eth_requestAccounts",
           });
-          Toast.fire({
-            icon: "success",
-            titleText: "Successfully connected to MetaMask",
-            width: "27rem",
+          const chain = await window.ethereum.request({
+            method: "net_version",
           });
+          if (chain == 1) {
+            Toast.fire({
+              icon: "success",
+              titleText: "Successfully connected to MetaMask",
+              width: "27rem",
+            });
+          } else {
+            Toast.fire({
+              icon: "error",
+              titleText: "You are connected to the wrong chain",
+              width: "27rem",
+            });
+          }
           return {
             address: accounts[0],
             status: `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`,
@@ -271,20 +291,29 @@ function App() {
   async function getCurrentWalletConnected() {
     if (window.ethereum) {
       try {
-        const addressArray = await window.ethereum.request({
+        const accounts = await window.ethereum.request({
           method: "eth_accounts",
         });
-        if (addressArray.length > 0) {
-          Toast.fire({
-            icon: "success",
-            titleText: "Successfully connected to MetaMask",
-            width: "27rem",
-          });
+        const chain = await window.ethereum.request({
+          method: "net_version",
+        });
+        if (accounts.length > 0) {
+          if (chain == 1) {
+            Toast.fire({
+              icon: "success",
+              titleText: "Successfully connected to MetaMask",
+              width: "27rem",
+            });
+          } else {
+            Toast.fire({
+              icon: "error",
+              titleText: "You are connected to the wrong chain",
+              width: "27rem",
+            });
+          }
           return {
-            address: addressArray[0],
-            status: `${addressArray[0].slice(0, 6)}...${addressArray[0].slice(
-              -4
-            )}`,
+            address: accounts[0],
+            status: `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`,
           };
         } else {
           Toast.fire({

@@ -3,7 +3,7 @@ import twitterlogo from "../images/twitter.svg";
 import discordlogo from "../images/discord.svg";
 import instagramlogo from "../images/instagram-icon.svg";
 import metamasklogo from "../images/metamask.svg";
-import Input from "./SearchInput";
+import { Input } from ".";
 declare global {
   interface Window {
     ethereum?: any;
@@ -12,13 +12,14 @@ declare global {
 }
 interface Props {
   isTablet: boolean;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-  onMetaMaskClick?: (e: React.MouseEvent<HTMLElement>) => void;
-  statusMsg?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  onMetaMaskClick: (e: React.MouseEvent<HTMLElement>) => void;
+  statusMsg: string | undefined;
+  loading: boolean;
 }
 
-const Navbar = (props: Props) => {
+export const Navbar = (props: Props) => {
   return (
     <div className="navbar-wrapper flex justify-between items-center px-2 py-8 whitespace-nowrap">
       <div className="logo ml-0 sm:ml-8">Trait Surfer</div>
@@ -28,6 +29,7 @@ const Navbar = (props: Props) => {
           placeholder="Search collection by contract"
           onClick={props.onClick}
           onChange={props.onChange}
+          loading={props.loading}
         />
       </div>
       <div className="links sm:flex sm:items-center hidden">
@@ -62,5 +64,3 @@ const Navbar = (props: Props) => {
     </div>
   );
 };
-
-export default Navbar;
