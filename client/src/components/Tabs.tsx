@@ -85,14 +85,11 @@ export const Tabs = (props: Props) => {
                       return (
                         <Card
                           src={
-                            element?.image?.includes("https")
-                              ? element?.image
-                                  ?.replace("rcc.", "")
-                                  ?.replace("kaijukingz.", "")
-                              : `https://${element?.image?.replace(
-                                  "://",
-                                  ".io/ipfs/"
-                                )}`
+                            element?.image?.includes("ipfs")
+                              ? `https://ipfs.io/ipfs/${
+                                  element?.image?.split("ipfs/")[1]
+                                }`
+                              : element?.image
                           }
                           title={element?.name}
                           score={element?.score?.toFixed(2)}
@@ -118,14 +115,11 @@ export const Tabs = (props: Props) => {
                       return (
                         <Card
                           src={
-                            element?.image?.includes("https")
-                              ? element?.image
-                                  ?.replace("rcc.", "")
-                                  ?.replace("kaijukingz.", "")
-                              : `https://${element?.image?.replace(
-                                  "://",
-                                  ".io/ipfs/"
-                                )}`
+                            element?.image?.includes("ipfs")
+                              ? `https://ipfs.io/ipfs/${
+                                  element?.image?.split("ipfs/")[1]
+                                }`
+                              : element?.image
                           }
                           title={element?.name}
                           score={element?.score?.toFixed(2)}
