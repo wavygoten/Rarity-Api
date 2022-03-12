@@ -16,7 +16,7 @@ export const Card = (props: Props) => {
       className="card absolute flex flex-col text-md sm:text-lg"
       style={props.style}
     >
-      {props.src.includes(".mp4") ? (
+      {props.src?.includes(".mp4") ? (
         <video
           autoPlay={true}
           loop={true}
