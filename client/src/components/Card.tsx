@@ -1,5 +1,8 @@
 import React from "react";
-
+import { useImageRender } from "../hooks";
+interface PlaceHolderProps {
+  style: React.CSSProperties;
+}
 interface Props {
   src: string;
   title: string;
@@ -10,12 +13,22 @@ interface Props {
   style: React.CSSProperties;
 }
 
+const PlaceholderImage = (props: PlaceHolderProps) => {
+  return <div style={props.style} className="placeholder-image"></div>;
+};
+
 export const Card = (props: Props) => {
+  const imgEl = React.useRef<HTMLImageElement>(null);
+  const loaded = useImageRender(imgEl);
+
   return (
     <div
       className="card absolute flex flex-col text-md sm:text-lg"
       style={props.style}
     >
+      <PlaceholderImage
+        style={!loaded ? { display: "block" } : { display: "none" }}
+      />
       {props.src?.includes(".mp4") ? (
         <video
           autoPlay={true}
@@ -24,9 +37,16 @@ export const Card = (props: Props) => {
           playsInline={true}
           className="rounded-md"
           src={props.src}
+          style={loaded ? { display: "inline-block" } : { display: "none" }}
         />
       ) : (
-        <img className="rounded-md" src={props.src} alt="" />
+        <img
+          style={loaded ? { display: "inline-block" } : { display: "none" }}
+          className="rounded-md"
+          src={props.src}
+          ref={imgEl}
+          alt=""
+        />
       )}
       <div className="card-title ">
         <div>{props.title}</div>{" "}

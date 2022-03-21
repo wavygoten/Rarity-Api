@@ -27,6 +27,13 @@ function App() {
 
   let isTablet = useMediaQuery(mediaOptions.md);
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    showConfirmButton: false,
+    timer: 3500,
+  });
+
   const handleRequest = async (method: string, data: any, apiUrl: string) => {
     switch (method) {
       case "GET":
@@ -77,12 +84,16 @@ function App() {
     }
     return;
   };
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "bottom-end",
-    showConfirmButton: false,
-    timer: 3500,
-  });
+
+  const handleCardLink = (link: string) => {
+    if (link?.includes("ipfs://")) {
+      return `https://ipfs.io/ipfs/${link?.split("ipfs://")[1]}`;
+    } else if (link?.includes("ipfs")) {
+      return `https://ipfs.io/ipfs/${link?.split("ipfs/")[1]}`;
+    } else {
+      return link;
+    }
+  };
 
   function handleSort(e: any) {
     switch (e?.target?.value) {
@@ -222,6 +233,7 @@ function App() {
         handleSort={handleSort}
         handleNext={handleNext}
         handlePrev={handlePrev}
+        handleCardLink={handleCardLink}
         itemsPerPage={itemsPerPage}
         page={page}
       />

@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchTokens, Card } from ".";
-import { useCards } from "../hooks";
+import { useCards, useImageRender } from "../hooks";
 interface Props {
   data: any;
   paginationData: any;
@@ -12,6 +12,7 @@ interface Props {
   itemsPerPage: number;
   handleNext: () => void;
   handlePrev: () => void;
+  handleCardLink: (link: string) => string;
   page: number;
 }
 
@@ -32,7 +33,6 @@ export const Tabs = (props: Props) => {
   const totalHeight = Math.ceil(props.itemsPerPage / cardsPerRow) * 350;
 
   const data = [...props.data]; // all data
-
   return (
     <div className="tabs-wrapper flex flex-col sm:flex-row justify-between px-2 py-16 whitespace-nowrap">
       <div className="traits-container sticky top-2 z-10 flex flex-col shadow-lg rounded-md text-sm mx-2 sm:mr-4 sm:ml-8 mb-4 sm:mb-0 max-h">
@@ -84,13 +84,7 @@ export const Tabs = (props: Props) => {
                     if (idx < props.itemsPerPage) {
                       return (
                         <Card
-                          src={
-                            element?.image?.includes("ipfs")
-                              ? `https://ipfs.io/ipfs/${
-                                  element?.image?.split("ipfs/")[1]
-                                }`
-                              : element?.image
-                          }
+                          src={props.handleCardLink(element?.image)}
                           title={element?.name}
                           score={element?.score?.toFixed(2)}
                           rank={element?.rank}
@@ -114,13 +108,7 @@ export const Tabs = (props: Props) => {
                     ) {
                       return (
                         <Card
-                          src={
-                            element?.image?.includes("ipfs")
-                              ? `https://ipfs.io/ipfs/${
-                                  element?.image?.split("ipfs/")[1]
-                                }`
-                              : element?.image
-                          }
+                          src={props.handleCardLink(element?.image)}
                           title={element?.name}
                           score={element?.score?.toFixed(2)}
                           rank={element?.rank}

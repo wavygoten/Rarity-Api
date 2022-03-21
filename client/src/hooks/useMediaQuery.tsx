@@ -1,29 +1,29 @@
 import { useState, useEffect } from "react";
 
 export function useMediaQuery(query: string) {
-	const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(false);
 
-	useEffect(() => {
-		const media = window.matchMedia(query);
-		if (media.matches !== matches) {
-			setMatches(media.matches);
-		}
-		const listener = () => {
-			setMatches(media.matches);
-		};
-		media.addListener(listener);
-		return () => media.removeListener(listener);
-	}, [matches, query]);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => {
+      setMatches(media.matches);
+    };
+    media.addListener(listener);
+    return () => media.removeListener(listener);
+  }, [matches, query]);
 
-	return matches;
+  return matches;
 }
 
 export const mediaOptions = {
-	xs: "(min-width: 0px)",
-	sm: "(min-width: 640px)",
-	md: "(min-width: 768px)",
-	lg: "(min-width: 1024px)",
-	xl: "(min-width: 1280px)",
+  xs: "(min-width: 0px)",
+  sm: "(min-width: 640px)",
+  md: "(min-width: 768px)",
+  lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
 };
 
 // --breakpoint-xs: 0;
