@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchTokens, Card } from ".";
-import { useCards, useImageRender } from "../hooks";
+import { useCards } from "../hooks";
 interface Props {
   data: any;
   paginationData: any;
