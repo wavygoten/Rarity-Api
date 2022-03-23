@@ -13,8 +13,8 @@ interface Props {
   style: React.CSSProperties;
 }
 
-const PlaceholderImage = (props: PlaceHolderProps) => {
-  return <div style={props.style} className="placeholder-image"></div>;
+const PlaceholderImage = ({ style }: PlaceHolderProps) => {
+  return <div style={style} className="placeholder-image"></div>;
 };
 
 export const Card = (props: Props) => {
