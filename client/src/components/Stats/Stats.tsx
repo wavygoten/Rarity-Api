@@ -39,7 +39,7 @@ const Stats = () => {
     `,
     styleStack: css`
       justify-content: ${!md ? "center" : ""};
-      margin-bottom: ${!md ? "1rem" : ""};
+      margin-bottom: 1rem;
     `,
     imageStyles: css`
       width: 24px;

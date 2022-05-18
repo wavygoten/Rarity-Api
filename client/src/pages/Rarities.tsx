@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useReducer, useMemo } from "react";
-import { Navbar, Stats } from "../components";
+import { Content, Navbar, Stats } from "../components";
 import { RarityContext } from "../contexts/Rarity.context";
 import axios from "../handler/axios";
+import { usePagination } from "../hooks";
 import { useTheme } from "@mui/material";
 import Swal from "sweetalert2";
 declare var window: any;
@@ -16,6 +17,11 @@ export const Rarities = (props: Props) => {
   const [stats, setStats] = React.useState<any>([]);
   const [data, setData] = React.useState<any>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [sortVar, setSortVar] = React.useState<string>("");
+  const [page, setPage] = React.useState<number>(1);
+
+  const itemsPerPage: number = 20;
+  const _data = usePagination(data, itemsPerPage); // pagination;
 
   const theme = useTheme();
   const Toast = Swal.mixin({
@@ -99,11 +105,79 @@ export const Rarities = (props: Props) => {
     }
   }
 
+  const handleCardLink = (link: string) => {
+    if (link?.includes("ipfs://")) {
+      return `https://ipfs.io/ipfs/${link?.split("ipfs://")[1]}`;
+    } else if (link?.includes("ipfs")) {
+      return `https://ipfs.io/ipfs/${link?.split("ipfs/")[1]}`;
+    } else {
+      return link;
+    }
+  };
+
+  const handleNext = () => {
+    setPage((page: number) => page + 1);
+    _data.next();
+  };
+
+  const handlePrev = () => {
+    if (page !== 1) {
+      setPage((page: number) => page - 1);
+      _data.prev();
+    } else {
+      _data.prev();
+    }
+  };
+
+  function sortRank(data: any) {
+    var obj = [...data];
+    obj.sort((a, b) => a?.rank - b?.rank);
+    setData(obj);
+  }
+
+  function sortToken(data: any) {
+    var obj = [...data];
+    obj.sort((a, b) => a?.tokenid - b?.tokenid);
+    setData(obj);
+  }
+  function handleSort(e: any) {
+    switch (e?.target?.value) {
+      case "token-id":
+        setSortVar("token-id");
+        break;
+      case "rank":
+        setSortVar("rank");
+        break;
+    }
+  }
+
+  function matchExact(r: string, str: string) {
+    try {
+      var match = str?.match(r);
+      return match && str === match?.[0];
+    } catch (error: any) {}
+  }
+
   async function metamaskClick() {
     const _ = await UseWeb3();
     setAddress(_?.address);
     setStatus(_?.status);
   }
+
+  // sorter
+  useMemo(() => {
+    const sorter = () => {
+      if (sortVar === "rank") {
+        sortRank(data);
+      }
+      if (sortVar === "token-id") {
+        sortToken(data);
+      }
+    };
+    sorter();
+  }, [sortVar]);
+
+  // web3
   useMemo(() => {
     const __ = async () => {
       const _ = await getCurrentWalletConnected();
@@ -127,10 +201,26 @@ export const Rarities = (props: Props) => {
         Nav_loading: loading,
         Stats_collection: stats,
         Stats_contract: searchContract.length > 0 ? searchContract : "",
+        Content_data: data,
+        Content_handleCardLink: handleCardLink,
+        Content_handleNext: handleNext,
+        Content_handlePrev: handlePrev,
+        Content_handleSort: handleSort,
+        Content_itemsPerPage: itemsPerPage,
+        Content_matchExact: matchExact,
+        Content_onChange: (
+          e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          setSearchToken(e?.target?.value);
+        },
+        Content_page: page,
+        Content_paginationData: _data,
+        Content_searchToken: searchToken,
       }}
     >
       <Navbar />
       <Stats />
+      <Content />
     </RarityContext.Provider>
   );
   async function UseWeb3() {
