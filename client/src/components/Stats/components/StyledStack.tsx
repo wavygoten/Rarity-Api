@@ -4,15 +4,19 @@ import { jsx, css } from "@emotion/react";
 import { Stack, StackProps } from "@mui/material";
 
 export const StyledStack = ({ children, ...args }: StackProps) => {
-	const styles = {
-		root: css`
-			display: flex;
-			align-items: center;
-		`,
-	};
-	return (
-		<Stack css={styles.root} {...args}>
-			{children}
-		</Stack>
-	);
+  const styles = {
+    root: css`
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      li {
+        list-style: none;
+      }
+    `,
+  };
+  return (
+    <Stack css={styles.root} {...args}>
+      {children}
+    </Stack>
+  );
 };
