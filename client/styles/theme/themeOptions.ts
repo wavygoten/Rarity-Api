@@ -8,6 +8,11 @@ export const darkThemeOptions: ThemeOptions = {
 			dark: "#1f2024",
 			light: "#fff",
 		},
+		secondary: {
+			main: "#356957",
+			dark: "#191a1d",
+			light: "#f4f4f4",
+		},
 		action: {
 			hover: "#42836d",
 			disabled: grey[500],
