@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 import tw from 'twin.macro'
+import Image from 'next/image'
 import { RarityContext } from '../../../contexts/Rarity.context'
 import { styles } from './styles/styles'
+import linklogo from '../../../../public/link.svg'
 type Props = {}
 
 const Stats = (props: Props) => {
@@ -45,7 +47,10 @@ const Stats = (props: Props) => {
             rel="noopener noreferrer nofollow"
           >
             <span>
-              {/* <img src={linklogo} alt="" /> */}
+              <div css={styles.center}>
+                {' '}
+                <Image src={linklogo} alt="" />
+              </div>
               <div tw=" pb-1 ml-2">Opensea</div>
             </span>{' '}
           </a>
@@ -55,7 +60,10 @@ const Stats = (props: Props) => {
             rel="noopener noreferrer nofollow"
           >
             <span>
-              {/* <img src={linklogo} alt="" /> */}
+              <div css={styles.center}>
+                {' '}
+                <Image src={linklogo} alt="" />
+              </div>{' '}
               <div tw=" ml-2  pb-1 ">Etherscan</div>
             </span>{' '}
           </a>

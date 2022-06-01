@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
+@keyframes animatedBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1000px 0;
+  }
+}
+
 :root {
   --main-dark: #191a1d;
   --secondary-dark: #1f2024;
@@ -14,34 +23,20 @@
   padding: 0;
   font-family: 'Rubik', sans-serif;
 }
+
 #__next {
   max-width: 1536px;
   margin: 0 auto;
 }
+
 @media (prefers-color-scheme: dark) {
   html {
     color: var(--main-light);
     background-color: var(--main-dark);
   }
-
-  .sort-select {
-    background-color: var(--secondary-dark);
-    color: var(--secondary-light);
-    padding: 0.33rem;
-    border-radius: 6px;
-  }
   .swal2-popup {
     background-color: var(--secondary-dark) !important;
     color: var(--secondary-light) !important;
-  }
-  .placeholder-image {
-    background-image: linear-gradient(
-      90deg,
-      #1b1b1b 0%,
-      #0e0e0e 40%,
-      #121212 60%,
-      #1b1b1b 100%
-    );
   }
 }
 
@@ -50,100 +45,8 @@
     color: var(--main-dark);
     background-color: var(--main-light);
   }
-
-  .sort-select {
-    background-color: var(--secondary-light);
-    color: var(--secondary-dark);
-    padding: 0.33rem;
-    border-radius: 6px;
-  }
   .swal2-popup {
     background-color: var(--secondary-light) !important;
     color: var(--secondary-dark) !important;
   }
-  .placeholder-image {
-    background-image: linear-gradient(
-      90deg,
-      #e4e4e4 0%,
-      #f1f1f1 40%,
-      #ededed 60%,
-      #e4e4e4 100%
-    );
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-  .card {
-    flex: 0 0 40%;
-  }
-}
-
-.card {
-  transition: 0.4s;
-  min-width: 180px;
-  min-height: 350px;
-  max-width: 180px;
-  max-height: 350px;
-  width: 180px;
-  height: 350px;
-}
-
-@media screen and (min-width: 640px) {
-  .card {
-    transition: 0.4s;
-    min-width: 200px;
-    min-height: 350px;
-    max-width: 200px;
-    max-height: 350px;
-    width: 200px;
-    height: 350px;
-  }
-  .placeholder-image {
-    width: 200px;
-    height: 200px;
-    border-radius: 6px;
-    background-position: 0px 0px;
-    background-repeat: repeat;
-    animation: animatedBackground 5s linear infinite;
-  }
-}
-
-.card * {
-  margin: 0.25rem 0;
-}
-
-.opensea-card {
-  background: linear-gradient(var(--hover-theme) 0 0) var(--p, 100%) 100% /
-    var(--d, 0) 2px no-repeat;
-  width: fit-content;
-  padding-bottom: 0.25rem;
-}
-.opensea-card:hover {
-  cursor: pointer;
-  transition: 275ms, background-position 0s 0.3s;
-  --d: 100%;
-  --p: 0%;
-}
-
-@keyframes animatedBackground {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 1000px 0;
-  }
-}
-
-.placeholder-image {
-  width: 180px;
-  height: 180px;
-  border-radius: 6px;
-  background-position: 0px 0px;
-  background-repeat: repeat;
-  animation: animatedBackground 5s linear infinite;
 }

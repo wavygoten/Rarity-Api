@@ -17,6 +17,9 @@ export const styles = {
     min-width: 380px;
     top: 0.5rem;
   `,
+  collectionIndexContainer: css`
+    ${tw`flex flex-col p-5`}
+  `,
   input: css`
     ${tw`p-2 duration-75 ease-linear flex-1 ml-3`}
     @media (prefers-color-scheme: dark) {
@@ -32,6 +35,23 @@ export const styles = {
     }
     border-radius: 6px;
     border: transparent 2px solid;
+  `,
+  sort: css`
+    ${tw`shadow-md`}@media only screen and (max-width: 480px) {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--secondary-dark);
+      color: var(--secondary-light);
+      padding: 0.33rem;
+      border-radius: 6px;
+    }
+    background-color: var(--secondary-light);
+    color: var(--secondary-dark);
+    padding: 0.33rem;
+    border-radius: 6px;
   `,
   cardsContainer: css`
     ${tw`flex flex-col flex-1 text-sm rounded-md mx-2 sm:ml-2 sm:mr-6`}

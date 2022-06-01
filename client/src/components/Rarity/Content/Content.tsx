@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
-import tw, { css } from 'twin.macro'
+import tw from 'twin.macro'
+import Image from 'next/image'
 import { RarityContext } from '../../../contexts/Rarity.context'
 import { useCards } from '../../../hooks'
 import { styles } from './styles/styles'
 import { Card } from './components/Card'
+import searchlogo from '../../../../public/search.svg'
 type Props = {}
 
 const Content = (props: Props) => {
@@ -41,12 +43,20 @@ const Content = (props: Props) => {
     <section className="content">
       <div css={styles.contentWrapper}>
         <div css={styles.traitsContainer}>
-          <div tw="flex flex-col p-5">
+          <div css={styles.collectionIndexContainer}>
             <div tw="flex mb-4 border-b border-gray-500 pb-2">
               <div>Collection Index</div>
             </div>
             <div tw="flex items-center">
-              <div style={{ minWidth: 24 }}>{/* <img src="" alt="" /> */}</div>
+              <div
+                style={{
+                  minWidth: 24,
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image src={searchlogo} alt="" />
+              </div>
               <input
                 type="text"
                 name="tokenIds"
@@ -71,8 +81,7 @@ const Content = (props: Props) => {
               </div>
             </div>
             <select
-              className="sort-select"
-              tw="shadow-md"
+              css={styles.sort}
               onChange={(e: any) => Content_handleSort(e)}
             >
               <option value="token-id">Sort by Token ID</option>

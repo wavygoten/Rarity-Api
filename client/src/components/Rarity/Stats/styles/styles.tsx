@@ -1,6 +1,9 @@
 import tw, { css } from 'twin.macro'
 
 export const styles = {
+  center: css`
+    ${tw`flex justify-center`}
+  `,
   statsWrapper: css`
     ${tw`flex flex-wrap justify-center sm:justify-between px-2 py-12`}
   `,
@@ -12,8 +15,6 @@ export const styles = {
     span {
       margin: 0 2rem;
       display: flex;
-    }
-    div {
       background: linear-gradient(var(--hover-theme) 0 0) var(--p, 100%) 100% /
         var(--d, 0) 2px no-repeat;
       &:hover {
