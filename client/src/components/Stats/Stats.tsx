@@ -6,7 +6,7 @@ type Props = {}
 const Stats = (props: Props) => {
   const { Stats_collection, Stats_contract } = useContext(RarityContext)
 
-  return <div>Stats</div>
+  return <section className="stats">Stats</section>
 }
 
 export default Stats

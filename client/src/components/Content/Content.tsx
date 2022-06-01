@@ -17,7 +17,7 @@ const Content = (props: Props) => {
     Content_paginationData,
     Content_searchToken,
   } = useContext(RarityContext)
-  return <div>Content</div>
+  return <section className="content">Content</section>
 }
 
 export default Content

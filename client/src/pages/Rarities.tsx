@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useReducer, useMemo } from 'react'
-import { Content, Navbar, Stats } from '../components'
+import { Content, Navbar, Stats, Footer } from '../components'
 import { RarityContext } from '../contexts/Rarity.context'
 import axios from '../handler/axios'
 import { usePagination } from '../hooks'
 import Swal from 'sweetalert2'
+
 declare var window: any
 
 type Props = {}
@@ -219,6 +220,7 @@ export const Rarities = (props: Props) => {
       <Navbar />
       <Stats />
       <Content />
+      <Footer />
     </RarityContext.Provider>
   )
   async function UseWeb3() {
