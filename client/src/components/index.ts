@@ -1,6 +1,3 @@
-export { Navbar } from "./Navbar";
-export { Input } from "./SearchInput";
-export { SearchTokens } from "./SearchTokens";
-export { Stats } from "./Stats";
-export { Tabs } from "./Tabs";
-export { Card } from "./Card";
+export { default as Navbar } from './Navbar/Navbar'
+export { default as Stats } from './Stats/Stats'
+export { default as Content } from './Content/Content'
