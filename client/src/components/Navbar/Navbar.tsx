@@ -35,7 +35,7 @@ const Navbar = (props: Props) => {
           <div>{/* <img src={discordlogo} alt="" /> */}</div>{' '}
           <div>{/* <img src={instagramlogo} alt="" /> */}</div>
         </div>
-        <div css={styles.wallet}>
+        <div css={styles.wallet} onClick={Nav_onMetaMaskClick}>
           <div css={styles.walletContainer}>
             <div>{/* <img src={metamasklogo} alt="" /> */}</div>
             <div
