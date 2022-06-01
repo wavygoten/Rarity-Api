@@ -9,6 +9,12 @@
   --hover-theme: #42836d;
 }
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  font-family: 'Rubik', sans-serif;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color: var(--main-light);
@@ -18,22 +24,7 @@
     background-color: var(--secondary-dark);
     color: var(--secondary-light);
   }
-  .search-container {
-    background-color: var(--secondary-dark);
-    color: var(--secondary-light);
-  }
-  .traits-container {
-    background-color: var(--secondary-dark);
-    color: var(--secondary-light);
-  }
-  /* .cards-container {
-    background-color: var(--secondary-dark);
-    color: var(--secondary-light);
-  } */
-  .search-match input {
-    background-color: var(--main-dark);
-    color: var(--main-light);
-  }
+
   .sort-select {
     background-color: var(--secondary-dark);
     color: var(--secondary-light);
@@ -64,22 +55,7 @@
     background-color: var(--secondary-light);
     color: var(--secondary-dark);
   }
-  .search-container {
-    background-color: var(--secondary-light);
-    color: var(--secondary-dark);
-  }
-  .traits-container {
-    background-color: var(--secondary-light);
-    color: var(--secondary-dark);
-  }
-  /* .cards-container {
-    background-color: var(--secondary-light);
-    color: var(--secondary-dark);
-  } */
-  .search-match input {
-    background-color: var(--main-light);
-    color: var(--main-dark);
-  }
+
   .sort-select {
     background-color: var(--secondary-light);
     color: var(--secondary-dark);
@@ -110,48 +86,6 @@
   .card {
     flex: 0 0 40%;
   }
-}
-* {
-  box-sizing: border-box;
-  padding: 0;
-  font-family: 'Rubik', sans-serif;
-}
-
-.search-match input {
-  border-radius: 6px;
-}
-
-.search-btn:hover {
-  background-color: var(--hover-theme);
-  transition: 75ms ease-in;
-}
-
-.traits-container {
-  flex: 0 0 25%;
-  max-height: 125px;
-  min-width: 380px;
-  top: 0.5rem;
-}
-
-.search-match input:focus,
-.search-match input:active {
-  border: var(--main-theme) 2px solid;
-  outline: 0 none;
-}
-
-.search-match input {
-  border: transparent 2px solid;
-}
-
-.next,
-.previous {
-  user-select: none;
-}
-.next:hover,
-.previous:hover {
-  cursor: pointer;
-  color: var(--hover-theme);
-  transition: 150ms ease;
 }
 
 .card {

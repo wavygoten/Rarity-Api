@@ -19,6 +19,7 @@ type ContextProps = {
   Content_handlePrev: () => void
   Content_handleCardLink: (link: string) => string
   Content_page: number
+  isTablet: boolean
 }
 
 export const RarityContext = createContext<ContextProps>({})

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer, useMemo } from 'react'
 import { Content, Navbar, Stats, Footer } from '../components'
 import { RarityContext } from '../contexts/Rarity.context'
 import axios from '../handler/axios'
-import { usePagination } from '../hooks'
+import { usePagination, useMediaQuery, mediaOptions } from '../hooks'
 import Swal from 'sweetalert2'
 
 declare var window: any
@@ -22,6 +22,7 @@ export const Rarities = (props: Props) => {
 
   const itemsPerPage: number = 20
   const _data = usePagination(data, itemsPerPage) // pagination;
+  let isTablet = useMediaQuery(mediaOptions.md)
 
   const Toast = Swal.mixin({
     toast: true,
@@ -215,6 +216,7 @@ export const Rarities = (props: Props) => {
         Content_page: page,
         Content_paginationData: _data,
         Content_searchToken: searchToken,
+        isTablet: isTablet,
       }}
     >
       <Navbar />
