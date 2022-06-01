@@ -126,21 +126,6 @@
   transition: 75ms ease-in;
 }
 
-.links-container img {
-  transition: 125ms ease-in;
-  cursor: pointer;
-}
-
-.links-container div {
-  background: linear-gradient(var(--hover-theme) 0 0) var(--p, 100%) 100% /
-    var(--d, 0) 2px no-repeat;
-}
-.links-container div:hover {
-  cursor: pointer;
-  transition: 275ms, background-position 0s 0.3s;
-  --d: 100%;
-  --p: 0%;
-}
 .traits-container {
   flex: 0 0 25%;
   max-height: 125px;

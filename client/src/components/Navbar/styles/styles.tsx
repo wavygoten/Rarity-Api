@@ -10,7 +10,7 @@ export const styles = {
     user-select: none;
   `,
   searchContainer: css`
-    ${tw`text-sm sm:text-lg flex mx-auto justify-center rounded-md`}
+    ${tw`text-sm sm:text-base flex mx-auto justify-center rounded-md`}
     @media (prefers-color-scheme:dark) {
       background-color: var(--secondary-dark);
       color: var(--secondary-light);
@@ -72,7 +72,7 @@ export const styles = {
     }
   `,
   walletContainer: css`
-    ${tw`flex py-2 px-4 rounded-lg ease-linear duration-75 text-lg`}
+    ${tw`flex py-2 px-4 rounded-lg ease-linear duration-75 text-base`}
     border: 0.25px solid var(--main-theme);
     &:hover {
       background-color: var(--hover-theme);
