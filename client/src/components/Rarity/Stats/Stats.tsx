@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import tw from 'twin.macro'
-import { RarityContext } from '../../contexts/Rarity.context'
+import { RarityContext } from '../../../contexts/Rarity.context'
 import { styles } from './styles/styles'
 type Props = {}
 

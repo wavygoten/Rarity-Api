@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { RarityContext } from '../../contexts/Rarity.context'
+import { RarityContext } from '../../../contexts/Rarity.context'
 import { styles } from './styles/styles'
 // import twitterlogo from '../images/twitter.svg'
 // import discordlogo from '../images/discord.svg'
@@ -21,6 +21,7 @@ const Navbar = (props: Props) => {
         <div css={styles.logo}>Trait Surfer</div>
         <div css={styles.searchContainer}>
           <input
+            type="text"
             css={styles.input}
             name="contractSearch"
             placeholder="Search collection by contract"

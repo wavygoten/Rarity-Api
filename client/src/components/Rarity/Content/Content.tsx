@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import tw, { css } from 'twin.macro'
-import { RarityContext } from '../../contexts/Rarity.context'
-import { useCards } from '../../hooks'
+import { RarityContext } from '../../../contexts/Rarity.context'
+import { useCards } from '../../../hooks'
 import { styles } from './styles/styles'
+import { Card } from './components/Card'
 type Props = {}
 
 const Content = (props: Props) => {
@@ -81,17 +82,31 @@ const Content = (props: Props) => {
           <div
             className="cards"
             ref={ref}
-            css={css`
-              height: ${totalHeight}px;
-              position: relative;
-            `}
+            style={{
+              height: totalHeight,
+              position: 'relative',
+            }}
           >
             {Content_data && !Content_searchToken
               ? React.Children.toArray(
                   Content_paginationData?.currentData()?.map(
                     (element: any, idx: number) => {
                       if (idx < Content_itemsPerPage) {
-                        return <div className="card">Card</div>
+                        return (
+                          <Card
+                            key={idx}
+                            src={Content_handleCardLink(element?.image)}
+                            title={element?.name}
+                            score={element?.score?.toFixed(2)}
+                            rank={element?.rank}
+                            opensea={element?.opensea}
+                            style={{
+                              transform: `translate(${fnLeft(idx)}, ${fnTop(
+                                idx,
+                              )})`,
+                            }}
+                          />
+                        )
                       }
                       return <></>
                     },
@@ -106,7 +121,27 @@ const Content = (props: Props) => {
                           element?.tokenid,
                         )
                       ) {
-                        return <div className="card">Card</div>
+                        return (
+                          <Card
+                            key={idx}
+                            src={Content_handleCardLink(element?.image)}
+                            title={element?.name}
+                            score={element?.score?.toFixed(2)}
+                            rank={element?.rank}
+                            opensea={element?.opensea}
+                            style={
+                              isTablet
+                                ? {
+                                    position: 'sticky',
+                                    top: '0.5rem',
+                                  }
+                                : {
+                                    position: 'sticky',
+                                    top: '9rem',
+                                  }
+                            }
+                          />
+                        )
                       }
                     }
                     return <></>

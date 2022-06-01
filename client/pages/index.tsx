@@ -1,8 +1,8 @@
-import { Rarities } from '../src/pages/Rarities'
+import { Rarities } from '../src/pages/'
 const App = () => (
-  <div style={{ maxWidth: 1536, margin: '0 auto' }}>
+  <>
     <Rarities />
-  </div>
+  </>
 )
 
 export default App

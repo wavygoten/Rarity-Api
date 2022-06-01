@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, useMemo } from 'react'
-import { Content, Navbar, Stats, Footer } from '../components'
+import { Rarity_Content, Rarity_Navbar, Rarity_Stats } from '../components'
 import { RarityContext } from '../contexts/Rarity.context'
 import axios from '../handler/axios'
 import { usePagination, useMediaQuery, mediaOptions } from '../hooks'
@@ -9,7 +9,7 @@ declare var window: any
 
 type Props = {}
 
-export const Rarities = (props: Props) => {
+const Rarities = (props: Props) => {
   const [address, setAddress] = useState<string | undefined>('')
   const [status, setStatus] = useState<string | undefined>('')
   const [searchContract, setSearchContract] = useState<string>('')
@@ -219,10 +219,9 @@ export const Rarities = (props: Props) => {
         isTablet: isTablet,
       }}
     >
-      <Navbar />
-      <Stats />
-      <Content />
-      <Footer />
+      <Rarity_Navbar />
+      <Rarity_Stats />
+      <Rarity_Content />
     </RarityContext.Provider>
   )
   async function UseWeb3() {
@@ -337,3 +336,5 @@ export const Rarities = (props: Props) => {
     }
   }
 }
+
+export default Rarities
