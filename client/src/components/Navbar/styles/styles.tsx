@@ -21,6 +21,12 @@ export const styles = {
   `,
   input: css`
     ${tw`p-2 duration-75 ease-linear sm:w-5/6 w-3/4`}
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--secondary-dark);
+      color: var(--secondary-light);
+    }
+    background-color: var(--secondary-light);
+    color: var(--secondary-dark);
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     :focus,

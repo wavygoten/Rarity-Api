@@ -20,10 +20,6 @@
     color: var(--main-light);
     background-color: var(--main-dark);
   }
-  input {
-    background-color: var(--secondary-dark);
-    color: var(--secondary-light);
-  }
 
   .sort-select {
     background-color: var(--secondary-dark);
@@ -50,10 +46,6 @@
   html {
     color: var(--main-dark);
     background-color: var(--main-light);
-  }
-  input {
-    background-color: var(--secondary-light);
-    color: var(--secondary-dark);
   }
 
   .sort-select {
