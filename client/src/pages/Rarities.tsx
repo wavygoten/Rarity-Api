@@ -7,9 +7,7 @@ import Swal from 'sweetalert2'
 
 declare var window: any
 
-type Props = {}
-
-const Rarities = (props: Props) => {
+const Rarities = () => {
   const [address, setAddress] = useState<string | undefined>('')
   const [status, setStatus] = useState<string | undefined>('')
   const [searchContract, setSearchContract] = useState<string>('')
@@ -186,7 +184,7 @@ const Rarities = (props: Props) => {
   }
 
   // sorter
-  useMemo(() => {
+  useEffect(() => {
     const sorter = () => {
       if (sortVar === 'rank') {
         sortRank(data)

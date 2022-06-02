@@ -9,9 +9,7 @@ import instagramlogo from '../../../../public/instagram-icon.svg'
 import metamasklogo from '../../../../public/metamask.svg'
 import searchlogo from '../../../../public/search.svg'
 
-type Props = {}
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
   const {
     Nav_onChange,
     Nav_onClick,
@@ -56,7 +54,7 @@ const Navbar = (props: Props) => {
               <Image width={24} height={24} src={metamasklogo} alt="" />
             </div>
             <div tw="hidden sm:inline-flex" style={{ marginLeft: '0.5rem' }}>
-              {Nav_walletAddress}
+              {Nav_walletAddress ? Nav_walletAddress : 'Connect to MetaMask'}
             </div>
           </div>
         </div>

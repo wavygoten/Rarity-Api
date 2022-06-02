@@ -7,9 +7,8 @@ import { styles } from './styles/styles'
 import { Card } from './components/Card'
 import searchlogo from '../../../../public/search.svg'
 import { StyledAccordion } from '../../Mui/StyledAccordion'
-type Props = {}
 
-const Content = (props: Props) => {
+const Content = () => {
   const {
     Content_data,
     Content_handleCardLink,
@@ -83,6 +82,7 @@ const Content = (props: Props) => {
                   )
                   return (
                     <StyledAccordion
+                      key={i}
                       title={`${key} [${value.length}]`}
                       description={value}
                     />

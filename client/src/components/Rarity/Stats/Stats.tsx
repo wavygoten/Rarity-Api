@@ -4,9 +4,8 @@ import Image from 'next/image'
 import { RarityContext } from '../../../contexts/Rarity.context'
 import { styles } from './styles/styles'
 import linklogo from '../../../../public/link.svg'
-type Props = {}
 
-const Stats = (props: Props) => {
+const Stats = () => {
   const { Stats_collection, Stats_contract } = useContext(RarityContext)
 
   return (
