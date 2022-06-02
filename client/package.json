@@ -11,7 +11,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "production": "pm2 start yarn --name 'nextjs' --interpreter bash -- start --port 3000"
+    "production": "pm2 start yarn --name 'rarity-api' --interpreter bash -- start"
   },
   "dependencies": {
     "@emotion/css": "^11.5.0",

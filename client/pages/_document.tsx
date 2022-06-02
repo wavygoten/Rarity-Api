@@ -6,18 +6,17 @@ export default class MyDocument extends Document {
     const initialProps = await Document.getInitialProps(ctx)
     const critical = extractCritical(initialProps.html)
     initialProps.html = critical.html
-    return {
-      ...initialProps,
-      styles: [
-        <>
-          {initialProps.styles}
-          <style
-            data-emotion-css={critical.ids.join(' ')}
-            dangerouslySetInnerHTML={{ __html: critical.css }}
-          />
-        </>,
-      ],
-    }
+    // initialProps.styles = (
+    //   <React.Fragment>
+    //     {initialProps.styles}
+    //     <style
+    //       data-emotion-css={critical.ids.join(' ')}
+    //       dangerouslySetInnerHTML={{ __html: critical.css }}
+    //     />
+    //   </React.Fragment>
+    // )
+
+    return initialProps
   }
 
   render() {
