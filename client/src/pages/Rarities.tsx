@@ -199,7 +199,7 @@ const Rarities = (props: Props) => {
   }, [sortVar])
 
   // web3
-  useMemo(() => {
+  useEffect(() => {
     const __ = async () => {
       const _ = await getCurrentWalletConnected()
       setAddress(_?.address)
