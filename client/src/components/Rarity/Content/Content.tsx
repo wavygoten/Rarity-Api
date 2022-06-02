@@ -6,6 +6,7 @@ import { useCards } from '../../../hooks'
 import { styles } from './styles/styles'
 import { Card } from './components/Card'
 import searchlogo from '../../../../public/search.svg'
+import { StyledAccordion } from '../../Mui/StyledAccordion'
 type Props = {}
 
 const Content = (props: Props) => {
@@ -21,6 +22,7 @@ const Content = (props: Props) => {
     Content_page,
     Content_paginationData,
     Content_searchToken,
+    Content_traits,
     isTablet,
   } = useContext(RarityContext)
   const ref = React.useRef<any>(null)
@@ -36,16 +38,16 @@ const Content = (props: Props) => {
     isTablet
       ? Math.floor(idx % cardsPerRow) * 215 + 'px'
       : Math.floor(idx % cardsPerRow) * 200 + 'px'
-  const totalHeight = Math.ceil(Content_itemsPerPage / cardsPerRow) * 350
+  const totalHeight = Math.ceil(Content_itemsPerPage / cardsPerRow) * 350 || 0
 
   const data = [...Content_data]
   return (
     <section className="content">
       <div css={styles.contentWrapper}>
-        <div css={styles.traitsContainer}>
-          <div css={styles.collectionIndexContainer}>
+        <div css={styles.Index}>
+          <div css={styles.tokenIndex}>
             <div tw="flex mb-4 border-b border-gray-500 pb-2">
-              <div>Collection Index</div>
+              <div>Token Index</div>
             </div>
             <div tw="flex items-center">
               <div
@@ -67,6 +69,30 @@ const Content = (props: Props) => {
               />
             </div>
           </div>
+          {Object.keys(Content_traits).length > 0 ? (
+            <div css={styles.traitsIndex}>
+              <div tw="flex mb-4 border-b border-gray-500 pb-2">
+                <div>Traits Index</div>
+              </div>
+              <div css={styles.accordion}>
+                {Object.entries(Content_traits).map(([key, value], i) => {
+                  value = value.filter(
+                    (value: any, index: number, self: any) =>
+                      index ===
+                      self.findIndex((t: any) => t.value === value.value),
+                  )
+                  return (
+                    <StyledAccordion
+                      title={`${key} [${value.length}]`}
+                      description={value}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <div css={styles.cardsContainer}>
           <div css={styles.paginationContainer}>

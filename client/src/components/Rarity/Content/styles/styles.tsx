@@ -4,21 +4,40 @@ export const styles = {
   contentWrapper: css`
     ${tw`flex flex-col sm:flex-row justify-between px-2 py-16 whitespace-nowrap`}
   `,
-  traitsContainer: css`
-    ${tw`sticky top-2 z-10 flex flex-col shadow-lg rounded-md text-sm mx-2 sm:mr-4 sm:ml-8 mb-4 sm:mb-0 `}
+  Index: css`
+    ${tw`text-sm mx-2 sm:mr-4 sm:ml-8 mb-4 sm:mb-0 `}
+    flex: 0 0 25%;
+  `,
+  tokenIndex: css`
+    ${tw`flex flex-col sm:sticky sm:top-2 sm:z-10 p-5 shadow-lg rounded-md`}
     @media (prefers-color-scheme: dark) {
       background-color: var(--secondary-dark);
       color: var(--secondary-light);
     }
     background-color: var(--secondary-light);
     color: var(--secondary-dark);
-    flex: 0 0 25%;
     max-height: 125px;
     min-width: 380px;
-    top: 0.5rem;
   `,
-  collectionIndexContainer: css`
-    ${tw`flex flex-col p-5`}
+  traitsIndex: css`
+    ${tw`sm:flex flex-col shadow-lg rounded-md text-sm p-5 mt-6 hidden`}
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--secondary-dark);
+      color: var(--secondary-light);
+    }
+    background-color: var(--secondary-light);
+    color: var(--secondary-dark);
+  `,
+  accordion: css`
+    .MuiPaper-root {
+      @media (prefers-color-scheme: dark) {
+        background-color: var(--main-dark);
+        color: var(--main-light);
+      }
+      background-color: var(--secondary-light);
+      color: var(--secondary-dark);
+      margin-bottom: 0.25rem;
+    }
   `,
   input: css`
     ${tw`p-2 duration-75 ease-linear flex-1 ml-3`}

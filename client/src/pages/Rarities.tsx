@@ -19,7 +19,7 @@ const Rarities = (props: Props) => {
   const [loading, setLoading] = React.useState<boolean>(false)
   const [sortVar, setSortVar] = React.useState<string>('')
   const [page, setPage] = React.useState<number>(1)
-
+  const [traits, setTraits] = React.useState<object>({})
   const itemsPerPage: number = 20
   const _data = usePagination(data, itemsPerPage) // pagination;
   let isTablet = useMediaQuery(mediaOptions.md)
@@ -32,6 +32,25 @@ const Rarities = (props: Props) => {
     // color: theme.palette.primary.light,
     timer: 3500,
   })
+
+  function handleTraitData(data: any): object {
+    let arr: Array<object> = []
+    for (let i = 0; i < data.length; i++) {
+      data[i]?.traits.map((element: any, idx: number) => {
+        arr.push({
+          trait_type: element?.trait_type,
+          value: element?.value,
+        })
+      })
+    }
+    let result = arr.reduce((r: any, a: any) => {
+      r[a.trait_type] = r[a.trait_type] || []
+      r[a.trait_type].push(a)
+      return r
+    }, Object.create(null))
+    console.log(result)
+    return result
+  }
   const handleRequest = async (method: string, data: any, apiUrl: string) => {
     switch (method) {
       case 'GET':
@@ -44,6 +63,7 @@ const Rarities = (props: Props) => {
               titleText: 'Contract data fetched',
               width: '20rem',
             })
+            setTraits(handleTraitData(dataResponse?.data?.success?.data))
             return setData(dataResponse?.data?.success?.data)
           } else {
             Toast.fire({
@@ -51,6 +71,7 @@ const Rarities = (props: Props) => {
               titleText: "Contract data doesn't exist",
               width: '22rem',
             })
+            setTraits({})
             return setData([])
           }
         } catch (error: any) {
@@ -95,7 +116,7 @@ const Rarities = (props: Props) => {
         '/stats',
       )
       const allData: void = await handleRequest('GET', searchContract, '')
-      Promise.all([statistics, allData])
+      Promise.all([allData])
     } else {
       Toast.fire({
         icon: 'error',
@@ -216,6 +237,7 @@ const Rarities = (props: Props) => {
         Content_page: page,
         Content_paginationData: _data,
         Content_searchToken: searchToken,
+        Content_traits: traits,
         isTablet: isTablet,
       }}
     >
