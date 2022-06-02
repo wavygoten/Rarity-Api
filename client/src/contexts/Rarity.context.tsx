@@ -23,4 +23,4 @@ type ContextProps = {
   isTablet: boolean
 }
 
-export const RarityContext = createContext<ContextProps>({})
+export const RarityContext = createContext<ContextProps>({} as ContextProps)

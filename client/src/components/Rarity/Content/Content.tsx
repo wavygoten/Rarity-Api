@@ -38,7 +38,7 @@ const Content = (props: Props) => {
     isTablet
       ? Math.floor(idx % cardsPerRow) * 215 + 'px'
       : Math.floor(idx % cardsPerRow) * 200 + 'px'
-  const totalHeight = Math.ceil(Content_itemsPerPage / cardsPerRow) * 350 || 0
+  const totalHeight = Math.ceil(Content_itemsPerPage / cardsPerRow) * 350
 
   const data = [...Content_data]
   return (

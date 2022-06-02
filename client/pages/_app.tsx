@@ -6,7 +6,7 @@ import GlobalStyles from './../styles/GlobalStyles'
 import './../styles/index.css'
 import { Footer } from '../src/components'
 
-const App = ({ Component, pageProps }: AppProps) => (
+const App = ({ Component, pageProps }: AppProps | any) => (
   <CacheProvider value={cache}>
     <GlobalStyles />
     <Head>
