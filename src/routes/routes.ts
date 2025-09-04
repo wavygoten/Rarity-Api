@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Request, Response } from "express";
 import { DB } from "../db/db";
 import utils from "../utils/utils";
 
@@ -71,13 +71,14 @@ export class Routes {
 	public scrape = async (req: Request, res: Response) => {
 		if (req.method === "POST") {
 			const { contractAddress } = req.body;
-			const collectionData: any = await utils.fetchContract(contractAddress);
-			const slug: string = collectionData?.collection?.slug;
-			const collection: any = await utils.fetchCollection(slug);
-			const traits: any = collection?.collection?.traits;
-			const totalSupply: number = collection?.collection?.stats?.count;
+			const contractData: any = await utils.fetchContract(contractAddress);
+			const slug: string = contractData?.collection;
+			const collectionData = await utils.fetchCollection(slug);
+			const totalSupply: number = collectionData?.total_supply;
+			const collection: any = await utils.fetchTraits(slug);
+			const traits: any = collection?.counts;
 			const traitRarities: any = await utils.checkRarity(traits, totalSupply);
-			const assets: any = await utils.fetchMultipleAssets(
+			const assets: any = await utils.fetchAssets(
 				contractAddress,
 				totalSupply,
 				traitRarities
@@ -156,9 +157,9 @@ export class Routes {
 		if (req.method === "POST") {
 			const { contractAddress } = req.body;
 			const collectionData: any = await utils.fetchContract(contractAddress);
-			const slug: string = collectionData?.collection?.slug;
-			const collection: any = await utils.fetchCollection(slug);
-			return res.status(200).json({ success: collection });
+			const slug: string = collectionData?.collection;
+			const collection: any = await utils.fetchCollectionStats(slug);
+			return res.status(200).json({ success: { collection, slug } });
 		} else {
 			return res.status(400).json({ success: false });
 		}

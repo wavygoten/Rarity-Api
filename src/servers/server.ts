@@ -1,10 +1,12 @@
-import express from "express";
-import { Routes } from "../routes/routes";
-import helmet from "helmet";
-import cors from "cors";
 import bodyParser from "body-parser";
+import compression from "compression";
+import cors from "cors";
+import express from "express";
+import { rateLimit } from "express-rate-limit";
+import helmet from "helmet";
+import hpp from "hpp";
 import config from "../../config.json";
-const rateLimit = require("express-rate-limit");
+import { Routes } from "../routes/routes";
 const apiLimiter = rateLimit({
 	windowMs: 5 * 60 * 1000, // 5 minutes
 	max: 20,
@@ -20,7 +22,7 @@ export class Server {
 	private router: Routes;
 	constructor() {
 		this.app = express();
-		this.port = config.PORT;
+		this.port = config.PORT || 9887;
 		this.router = new Routes();
 		this.configuration();
 		this.routes();
@@ -30,10 +32,12 @@ export class Server {
 	 * Express Server Configuration
 	 */
 	public configuration() {
-		this.app.use(bodyParser.urlencoded({ extended: false }));
-		this.app.use(bodyParser.json());
+		this.app.use(bodyParser.urlencoded({ extended: false, limit: "10kb" }));
+		this.app.use(bodyParser.json({ limit: "10kb" }));
 		this.app.use(helmet());
 		this.app.use(cors());
+		this.app.use(compression());
+		this.app.use(hpp());
 	}
 
 	/**
@@ -44,23 +48,23 @@ export class Server {
 		this.app.get("/api/:contractaddress", apiLimiter, this.router.index);
 		this.app.get("/api/:contractaddress/:tokenid", this.router.queryIndex);
 		this.app.get("/api/", apiLimiter, this.router.account);
-		this.app.post(
-			"/api/blockchainrescrape",
-			apiLimiter,
-			this.router.rescrapeBlock
-		);
-		this.app.post("/api/blockchainscrape", apiLimiter, this.router.blockScrape);
+		// this.app.post(
+		// 	"/api/blockchainrescrape",
+		// 	apiLimiter,
+		// 	this.router.rescrapeBlock
+		// );
+		// this.app.post("/api/blockchainscrape", apiLimiter, this.router.blockScrape);
 		this.app.post("/api/contractaddress", apiLimiter, this.router.scrape);
 		// this.app.post("/api/recontractaddress", apiLimiter, this.router.reScrape);
 		this.app.post("/api/stats", apiLimiter, this.router.stats);
-		this.app.post("/api/deleteOne", this.router.deleteOne);
+		// this.app.post("/api/deleteOne", this.router.deleteOne);
 		// -------------------------------------------
 
 		// --------------- DB ROUTES -----------------
-		this.app.get("/api/deleteData", this.router.deleteData);
-		this.app.get("/api/deleteTable", this.router.deleteTable);
-		this.app.get("/api/createDB", this.router.createDB);
-		this.app.get("/api/deleteDB", this.router.deleteDB);
+		// this.app.get("/api/deleteData", this.router.deleteData);
+		// this.app.get("/api/deleteTable", this.router.deleteTable);
+		// this.app.get("/api/createDB", this.router.createDB);
+		// this.app.get("/api/deleteDB", this.router.deleteDB);
 		// -------------------------------------------
 	}
 
