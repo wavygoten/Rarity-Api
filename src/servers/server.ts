@@ -1,5 +1,5 @@
+import compression from "@polka/compression";
 import bodyParser from "body-parser";
-import compression from "compression";
 import cors from "cors";
 import express from "express";
 import { rateLimit } from "express-rate-limit";
@@ -37,7 +37,7 @@ export class Server {
 		this.app.use(helmet());
 		this.app.use(cors());
 		this.app.use(compression());
-		this.app.use(hpp());
+		(this.app as any).use(hpp());
 	}
 
 	/**
