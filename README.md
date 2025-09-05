@@ -1,7 +1,5 @@
 # Trait Surfer
 
-## Welcome to my uniquely crafted NFT rarity calculator
-
 ### Project I made for easy to use and friendly visualization of NFT's on the ethereum blockchain with display of their scores and ranks within the collection.
 
 #### Updates 9/2025
