@@ -6,6 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"tsc": "tsc ",
+		"build": "rm -rf build && bun tsc",
 		"start": "rm -rf build && bun tsc && node ./build/src/index.js",
 		"dev": "nodemon ./src/index.ts",
 		"production": "pm2 start bun --name 'rarity-api' -- start",
