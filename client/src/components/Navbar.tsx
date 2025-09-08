@@ -11,8 +11,8 @@ interface Props {
 	isTablet: boolean;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
 	onClick: (e: React.MouseEvent<HTMLElement>) => void;
-	onMetaMaskClick: (e: React.MouseEvent<HTMLElement>) => void;
-	statusMsg: string | undefined;
+	// onMetaMaskClick: (e: React.MouseEvent<HTMLElement>) => void;
+	// statusMsg: string | undefined;
 	loading: boolean;
 }
 
@@ -41,12 +41,12 @@ export const Navbar = (props: Props) => {
 					<InstagramIcon />
 				</div>
 			</div>
-			<div className="wallet sm:mr-8" onClick={props.onMetaMaskClick}>
+			<div className="wallet sm:mr-8">
 				<div className="wallet-container flex py-2 px-4 rounded-lg ease-linear duration-75 text-md">
 					<div>
 						<Metamask />
 					</div>
-					{props.isTablet ? (
+					{/* {props.isTablet ? (
 						<div
 							className="hidden sm:inline-flex"
 							style={{ marginLeft: "0.5rem" }}
@@ -55,7 +55,7 @@ export const Navbar = (props: Props) => {
 						</div>
 					) : (
 						<></>
-					)}
+					)} */}
 				</div>
 			</div>
 		</div>
