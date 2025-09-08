@@ -1,0 +1,66 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Install Bun (runner doesn’t have it by default)
+      - name: Install Bun
+        run: |
+          curl -fsSL https://bun.sh/install | bash
+          echo "$HOME/.bun/bin" >> $GITHUB_PATH
+
+      # 3. Build backend
+      - name: Build Backend
+        run: |
+          bun install --frozen-lockfile
+          bun run tsc
+
+      # 4. Build frontend
+      - name: Build Frontend
+        run: |
+          cd client
+          bun install --frozen-lockfile
+          bun run build
+
+      # 5. Copy backend build to EC2
+      - name: Copy Backend to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "/build/*"
+          target: "/home/ec2-user/Rarity-Api/backend/build"
+
+      # 6. Copy frontend build to EC2
+      - name: Copy Frontend to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "client/build/*"
+          target: "/home/ec2-user/Rarity-Api/client/build"
+
+      # 7. Restart apps on EC2
+      - name: Restart Apps
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/Rarity-Api
+            sudo pm2 restart rarity-api
+            sudo pm2 restart traitsurfer-client
