@@ -24,7 +24,7 @@ jobs:
         run: |
           cat <<EOF > config.json
           {
-            "DB": "${{ secrets.DB_URL }}",
+            "PG": "${{ secrets.DB_URL }}",
           }
           EOF
 
