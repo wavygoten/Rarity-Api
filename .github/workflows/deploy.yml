@@ -69,6 +69,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ec2-user/Rarity-Api
-            sudo pm2 restart rarity-api
-            sudo pm2 restart traitsurfer-client
+            sudo pm2 reload all
