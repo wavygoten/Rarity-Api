@@ -20,6 +20,14 @@ jobs:
           curl -fsSL https://bun.sh/install | bash
           echo "$HOME/.bun/bin" >> $GITHUB_PATH
 
+      - name: Create config.json
+        run: |
+          cat <<EOF > config.json
+          {
+            "DB": "${{ secrets.DB_URL }}",
+          }
+          EOF
+
       # 3. Build backend
       - name: Build Backend
         run: |

@@ -5,7 +5,6 @@ import express from "express";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import hpp from "hpp";
-import config from "../../config.json";
 import { Routes } from "../routes/routes";
 const apiLimiter = rateLimit({
 	windowMs: 5 * 60 * 1000, // 5 minutes
@@ -22,7 +21,7 @@ export class Server {
 	private router: Routes;
 	constructor() {
 		this.app = express();
-		this.port = config.PORT || 9887;
+		this.port = 9785;
 		this.router = new Routes();
 		this.configuration();
 		this.routes();

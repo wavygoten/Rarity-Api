@@ -1,9 +1,8 @@
 import fetch from "cross-fetch";
 import { ethers } from "ethers";
-import config from "../../config.json";
 import { DB } from "../db/db";
 const db = new DB();
-var apiKey: string = config.OPENSEA_API_KEY;
+var apiKey: string = "4128e918ba874186b88b5ec4c9c9611a";
 var data: any = {
 	name: [],
 	contract: [],
