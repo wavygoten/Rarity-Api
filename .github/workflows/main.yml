@@ -23,6 +23,7 @@ jobs:
         run: |
           echo "SERVER_IMAGE=$(echo ${{env.SERVER_IMAGE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
+          echo PG=${{ secrets.DB_URL }} >> .env     # <--- Add your PG string here
       - name: Log in to GitHub Packages
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

@@ -5,7 +5,8 @@ services:
       dockerfile: Dockerfile.server
     ports:
       - "9785:9785"
-
+    env_file:
+      - .env
   nginx:
     build:
       context: ./client

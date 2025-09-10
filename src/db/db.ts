@@ -1,10 +1,10 @@
+import "dotenv/config"; // automatically loads .env
 import { Pool } from "pg";
-import config from "../../config.json";
 export class DB {
 	public pool: Pool;
 	constructor() {
 		this.pool = new Pool({
-			connectionString: config.PG,
+			connectionString: process.env.PG,
 		});
 	}
 
