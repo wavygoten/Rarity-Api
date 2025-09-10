@@ -1,0 +1,25 @@
+# Build stage
+FROM oven/bun:1 AS build
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN bun install --production
+
+# Copy source code and compile TypeScript
+COPY . .
+RUN bun tsc
+
+# Runtime stage
+FROM oven/bun:1
+WORKDIR /app
+
+# Copy compiled JS and node_modules
+COPY --from=build /app/build ./build
+COPY --from=build /app/node_modules ./node_modules
+COPY package*.json ./
+
+# Start server directly using Node (Bun not needed for runtime)
+CMD ["node", "./build/src/index.js"]
+
+EXPOSE 9785

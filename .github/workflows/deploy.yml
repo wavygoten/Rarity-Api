@@ -1,72 +1,72 @@
-name: Deploy App
+# name: Deploy App
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      # 1. Checkout repo
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#     steps:
+#       # 1. Checkout repo
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      # 2. Install Bun (runner doesn’t have it by default)
-      - name: Install Bun
-        run: |
-          curl -fsSL https://bun.sh/install | bash
-          echo "$HOME/.bun/bin" >> $GITHUB_PATH
+#       # 2. Install Bun (runner doesn’t have it by default)
+#       - name: Install Bun
+#         run: |
+#           curl -fsSL https://bun.sh/install | bash
+#           echo "$HOME/.bun/bin" >> $GITHUB_PATH
 
-      - name: Create config.json
-        run: |
-          cat <<EOF > config.json
-          {
-            "PG": "${{ secrets.DB_URL }}",
-          }
-          EOF
+#       - name: Create config.json
+#         run: |
+#           cat <<EOF > config.json
+#           {
+#             "PG": "${{ secrets.DB_URL }}",
+#           }
+#           EOF
 
-      # 3. Build backend
-      - name: Build Backend
-        run: |
-          bun install --frozen-lockfile
-          bun run tsc
+#       # 3. Build backend
+#       - name: Build Backend
+#         run: |
+#           bun install --frozen-lockfile
+#           bun run tsc
 
-      # 4. Build frontend
-      - name: Build Frontend
-        run: |
-          cd client
-          bun install --frozen-lockfile
-          bun run build
+#       # 4. Build frontend
+#       - name: Build Frontend
+#         run: |
+#           cd client
+#           bun install --frozen-lockfile
+#           bun run build
 
-      # 5. Copy backend build to EC2
-      - name: Copy Backend to EC2
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "build/*"
-          target: "/home/ec2-user/Rarity-Api/build"
+#       # 5. Copy backend build to EC2
+#       - name: Copy Backend to EC2
+#         uses: appleboy/scp-action@v0.1.7
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_SSH_KEY }}
+#           source: "build/*"
+#           target: "/home/ec2-user/Rarity-Api/build"
 
-      # 6. Copy frontend build to EC2
-      - name: Copy Frontend to EC2
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "client/build/*"
-          target: "/home/ec2-user/Rarity-Api/client/build"
+#       # 6. Copy frontend build to EC2
+#       - name: Copy Frontend to EC2
+#         uses: appleboy/scp-action@v0.1.7
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_SSH_KEY }}
+#           source: "client/build/*"
+#           target: "/home/ec2-user/Rarity-Api/client/build"
 
-      # 7. Restart apps on EC2
-      - name: Restart Apps
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            sudo pm2 reload all
+#       # 7. Restart apps on EC2
+#       - name: Restart Apps
+#         uses: appleboy/ssh-action@v1.0.3
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_SSH_KEY }}
+#           script: |
+#             sudo pm2 reload all
