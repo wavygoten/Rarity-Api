@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.server
     ports:
       - "9785:9785"
-    image: $SERVER_IMAGE
+    image: "${SERVER_IMAGE}"
     restart: always
 
   nginx:
@@ -16,5 +16,5 @@ services:
       dockerfile: Dockerfile.client
     ports:
       - "80:80"
-    image: $NGINX_IMAGE
+    image: "${NGINX_IMAGE}"
     restart: always
