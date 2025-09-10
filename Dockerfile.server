@@ -20,6 +20,6 @@ COPY --from=build /app/node_modules ./node_modules
 COPY package*.json ./
 
 # Start server directly using Node (Bun not needed for runtime)
-CMD ["node", "./build/src/index.js"]
+CMD ["node", "./build/index.js"]
 
 EXPOSE 9785
