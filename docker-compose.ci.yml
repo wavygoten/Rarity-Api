@@ -5,9 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
-    image: ${{ env.SERVER_IMAGE }}
+    image: "${SERVER_IMAGE}"
   client:
     build:
       context: ./client
       dockerfile: Dockerfile.client
-    image: ${{ env.NGINX_IMAGE }}
+    image: "${NGINX_IMAGE}"
