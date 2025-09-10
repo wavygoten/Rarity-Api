@@ -5,8 +5,9 @@ on:
     branches: [main]
 
 env:
-  SERVER_IMAGE: ghcr.io/${{ github.repository }}/server:${{ github.sha }}
-  NGINX_IMAGE: ghcr.io/${{ github.repository }}/nginx:${{ github.sha }}
+  #
+  SERVER_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/server:${{ github.sha }}
+  NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:${{ github.sha }}
   REGISTRY: ghcr.io
 
 jobs:
