@@ -1,15 +1,15 @@
 # Build stage
-FROM node:20-alpine AS build
+FROM oven/bun:1.2.21 AS build
 WORKDIR /app
 
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN npm install
+RUN bun install
 
 # Copy source code and compile TypeScript
 COPY . .
-RUN npx tsc
-RUN ls -R ./build
+RUN bun tsc
+
 # Runtime stage
 FROM oven/bun:1
 WORKDIR /app
