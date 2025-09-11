@@ -1,7 +1,8 @@
 services:
   server:
-    env_file:
-      - .env
+    build:
+      context: ./
+      dockerfile: Dockerfile.server
     ports:
       - "9785:9785"
     image: "${SERVER_IMAGE}"
