@@ -91,11 +91,11 @@ jobs:
               set -a
               source .env   # <-- this exports SERVER_IMAGE and NGINX_IMAGE
               set +a
-              
+
               docker-compose down --rmi all -v 
               docker login ghcr.io -u ${{secrets.NAMESPACE}} -p ${{secrets.PERSONAL_ACCESS_TOKEN}}
               docker pull $SERVER_IMAGE
               docker pull $NGINX_IMAGE 
-              docker-compose --env-file=.env -f docker-compose.prod.yml up -d
+              docker-compose --env-file=.env -f docker-compose.prod.yml up -d --remove-orphans
               docker logout
           EOF
