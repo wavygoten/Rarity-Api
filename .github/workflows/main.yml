@@ -88,6 +88,10 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml ${{secrets.AWS_HOST_USER}}@${{ secrets.AWS_EC2_IP_ADDRESS }}:
           ssh -o StrictHostKeyChecking=no ${{secrets.AWS_HOST_USER}}@${{ secrets.AWS_EC2_IP_ADDRESS }} << EOF
+              set -a
+              source .env   # <-- this exports SERVER_IMAGE and NGINX_IMAGE
+              set +a
+              
               docker-compose down --rmi all -v 
               docker login ghcr.io -u ${{secrets.NAMESPACE}} -p ${{secrets.PERSONAL_ACCESS_TOKEN}}
               docker pull $SERVER_IMAGE
