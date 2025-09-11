@@ -1,20 +1,16 @@
-version: "3.9"
-
 services:
   server:
-    build:
-      context: .
-      dockerfile: Dockerfile.server
-    ports:
-      - "9785:9785"
     image: "${SERVER_IMAGE}"
     restart: always
+    env_file:
+      - .env
+    ports:
+      - "9785:9785"
 
   nginx:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.client
-    ports:
-      - "80:80"
     image: "${NGINX_IMAGE}"
     restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - server

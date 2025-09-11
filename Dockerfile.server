@@ -11,7 +11,7 @@ COPY . .
 RUN bunx tsc
 
 # Runtime stage
-FROM oven/bun:1
+FROM oven/bun:1.2.21
 WORKDIR /app
 
 # Copy compiled JS and node_modules
