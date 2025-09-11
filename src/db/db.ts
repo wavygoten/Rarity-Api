@@ -5,6 +5,7 @@ export class DB {
 	constructor() {
 		this.pool = new Pool({
 			connectionString: process.env.PG,
+			ssl: { rejectUnauthorized: false }, // for Amazon RDS
 		});
 	}
 
